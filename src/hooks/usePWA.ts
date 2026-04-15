@@ -1,42 +1,27 @@
 import { useRegisterSW } from "virtual:pwa-register/react"
-import { useMount } from "react-use"
 import { useToast } from "./useToast"
 
+// With pwa.config.ts set to `registerType: "autoUpdate"` + workbox
+// skipWaiting/clientsClaim, new service workers install and take over
+// immediately when a new build is deployed. This hook ties a fully
+// automatic reload to that event: when `needRefresh` fires (SW has a
+// new bundle waiting), we show a short grace-toast and then reload so
+// the new JS/CSS is running in the open tab. No manual "clear browser
+// data" or hard refresh required.
 export function usePWA() {
   const toaster = useToast()
-  const { updateServiceWorker, needRefresh: [needRefresh] } = useRegisterSW()
 
-  useMount(async () => {
-    const update = () => {
-      updateServiceWorker().then(() => localStorage.setItem("updated", "1"))
-    }
-    await delay(1000)
-    if (localStorage.getItem("updated")) {
-      localStorage.removeItem("updated")
-      toaster("更新成功，赶快体验吧", {
-        action: {
-          label: "查看更新",
-          onClick: () => {
-            window.open(`${Homepage}/releases/tag/v${Version}`)
-          },
-        },
-      })
-    } else if (needRefresh) {
-      if (!navigator) return
-
-      if ("connection" in navigator && !navigator.onLine) return
-
-      const resp = await myFetch("/latest")
-
-      if (resp.v && resp.v !== Version) {
-        toaster("有更新，5 秒后自动更新", {
-          action: {
-            label: "立刻更新",
-            onClick: update,
-          },
-          onDismiss: update,
-        })
-      }
-    }
+  useRegisterSW({
+    onNeedRefresh() {
+      // Short countdown toast, then reload. 3 s is enough for the user
+      // to see what's happening without being disruptive.
+      toaster("有新版本，3 秒后自动刷新", { type: "info" })
+      setTimeout(() => {
+        // Bust any cache-busters and force a full reload. The new SW is
+        // already active (skipWaiting) so the next load reads the new
+        // index.html and bundle.
+        window.location.reload()
+      }, 3000)
+    },
   })
 }
