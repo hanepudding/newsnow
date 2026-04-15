@@ -2,13 +2,15 @@ name: Publish Docker image
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
 
 jobs:
   build-docker:
-    name: Push Docker image to multiple registries
+    name: Push Docker image to GitHub Container Registry
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -23,7 +25,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to the Container registry
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -35,6 +37,17 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
+          # Resulting image tags:
+          #   push to main       -> :main, :latest, :sha-<7chars>
+          #   push tag v1.2.3    -> :v1.2.3, :1.2.3, :1.2, :latest, :sha-<7chars>
+          #   manual dispatch    -> whatever branch triggered it
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=short
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -47,3 +60,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
