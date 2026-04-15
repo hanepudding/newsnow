@@ -8,6 +8,13 @@ on:
       - 'v*'
   workflow_dispatch:
 
+# Only keep the latest run per ref alive. Without this, rapid pushes
+# to main can race: an older slow build finishing after a newer fast
+# build will overwrite `:latest` / `:main` tags with the older image.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-docker:
     name: Push Docker image to GitHub Container Registry
