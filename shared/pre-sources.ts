@@ -27,7 +27,7 @@ export const originSources = {
   "zhihu": {
     name: "知乎",
     type: "hottest",
-    column: "china",
+    column: "deprecated",
     color: "blue",
     home: "https://www.zhihu.com",
   },
@@ -35,7 +35,7 @@ export const originSources = {
     name: "微博",
     title: "实时热搜",
     type: "hottest",
-    column: "china",
+    column: "deprecated",
     color: "red",
     interval: Time.Realtime,
     home: "https://weibo.com",
@@ -52,7 +52,7 @@ export const originSources = {
   "coolapk": {
     name: "酷安",
     type: "hottest",
-    column: "tech",
+    column: "deprecated",
     color: "green",
     title: "今日最热",
     home: "https://coolapk.com",
@@ -96,7 +96,7 @@ export const originSources = {
     type: "realtime",
     color: "blue",
     home: "https://36kr.com",
-    column: "tech",
+    column: "deprecated",
     sub: {
       quick: {
         title: "快讯",
@@ -110,14 +110,14 @@ export const originSources = {
   "douyin": {
     name: "抖音",
     type: "hottest",
-    column: "china",
+    column: "deprecated",
     color: "gray",
     home: "https://www.douyin.com",
   },
   "hupu": {
     name: "虎扑",
     home: "https://hupu.com",
-    column: "china",
+    column: "deprecated",
     title: "主干道热帖",
     type: "hottest",
     color: "red",
@@ -125,7 +125,7 @@ export const originSources = {
   "tieba": {
     name: "百度贴吧",
     title: "热议",
-    column: "china",
+    column: "deprecated",
     type: "hottest",
     color: "blue",
     home: "https://tieba.baidu.com",
@@ -261,7 +261,7 @@ export const originSources = {
   "producthunt": {
     name: "Product Hunt",
     color: "red",
-    column: "tech",
+    column: "deprecated",
     type: "hottest",
     home: "https://www.producthunt.com/",
   },
@@ -280,22 +280,20 @@ export const originSources = {
   "bilibili": {
     name: "哔哩哔哩",
     color: "blue",
+    column: "deprecated",
     home: "https://www.bilibili.com",
     sub: {
       "hot-search": {
         title: "热搜",
-        column: "china",
         type: "hottest",
       },
       "hot-video": {
         title: "热门视频",
         disable: "cf",
-        column: "china",
         type: "hottest",
       },
       "ranking": {
         title: "排行榜",
-        column: "china",
         disable: "cf",
         type: "hottest",
         interval: Time.Common,
@@ -305,7 +303,7 @@ export const originSources = {
   "kuaishou": {
     name: "快手",
     type: "hottest",
-    column: "china",
+    column: "deprecated",
     color: "orange",
     // cloudflare pages cannot access
     disable: "cf",
@@ -369,7 +367,7 @@ export const originSources = {
   },
   "nowcoder": {
     name: "牛客",
-    column: "china",
+    column: "deprecated",
     color: "blue",
     type: "hottest",
     home: "https://www.nowcoder.com",
@@ -383,7 +381,7 @@ export const originSources = {
   },
   "juejin": {
     name: "稀土掘金",
-    column: "tech",
+    column: "deprecated",
     color: "blue",
     type: "hottest",
     home: "https://juejin.cn",
@@ -417,7 +415,7 @@ export const originSources = {
   },
   "douban": {
     name: "豆瓣",
-    column: "china",
+    column: "deprecated",
     title: "热门电影",
     color: "green",
     type: "hottest",
@@ -447,7 +445,7 @@ export const originSources = {
   },
   "freebuf": {
     name: "Freebuf",
-    column: "china",
+    column: "deprecated",
     title: "网络安全",
     color: "green",
     type: "hottest",
@@ -456,7 +454,7 @@ export const originSources = {
 
   "qqvideo": {
     name: "腾讯视频",
-    column: "china",
+    column: "deprecated",
     color: "blue",
     home: "https://v.qq.com/",
     sub: {
@@ -471,7 +469,7 @@ export const originSources = {
   },
   "iqiyi": {
     name: "爱奇艺",
-    column: "china",
+    column: "deprecated",
     color: "green",
     home: "https://www.iqiyi.com",
     sub: {
@@ -482,6 +480,202 @@ export const originSources = {
         home: "https://www.iqiyi.com",
       },
     },
+  },
+  "reuters": {
+    name: "Reuters",
+    color: "orange",
+    column: "finance",
+    interval: Time.Common,
+    home: "https://www.reuters.com",
+    sub: {
+      world: { title: "World", type: "realtime" },
+      business: { title: "Business", type: "realtime" },
+      markets: { title: "Markets", type: "realtime" },
+    },
+  },
+  "apnews": {
+    name: "AP News",
+    color: "red",
+    column: "world",
+    interval: Time.Common,
+    home: "https://apnews.com",
+    sub: {
+      top: { title: "Top", type: "realtime" },
+      business: { title: "Business", type: "realtime" },
+      world: { title: "World", type: "realtime" },
+    },
+  },
+  "marketwatch": {
+    name: "MarketWatch",
+    color: "green",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://www.marketwatch.com",
+    sub: {
+      top: { title: "Top Stories", type: "realtime" },
+      pulse: { title: "Market Pulse", type: "realtime" },
+      bulletins: { title: "Bulletins", type: "realtime" },
+    },
+  },
+  "cnbc": {
+    name: "CNBC",
+    color: "indigo",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://www.cnbc.com",
+    sub: {
+      top: { title: "Top News", type: "realtime" },
+      markets: { title: "Markets", type: "realtime" },
+      world: { title: "World", type: "realtime" },
+    },
+  },
+  "bloomberg": {
+    name: "Bloomberg",
+    color: "orange",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://www.bloomberg.com",
+    sub: {
+      markets: { title: "Markets", type: "realtime" },
+      politics: { title: "Politics", type: "realtime" },
+      tech: { title: "Technology", type: "realtime" },
+    },
+  },
+  "seekingalpha": {
+    name: "Seeking Alpha",
+    color: "amber",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://seekingalpha.com",
+    sub: {
+      currents: { title: "Market Currents", type: "realtime" },
+      articles: { title: "Articles", type: "realtime" },
+    },
+  },
+  "ft": {
+    name: "Financial Times",
+    color: "rose",
+    column: "finance",
+    interval: Time.Common,
+    home: "https://www.ft.com",
+    sub: {
+      world: { title: "World", type: "realtime" },
+      companies: { title: "Companies", type: "realtime" },
+      markets: { title: "Markets", type: "realtime" },
+    },
+  },
+  "nikkei": {
+    name: "Nikkei Asia",
+    color: "red",
+    column: "finance",
+    interval: Time.Common,
+    home: "https://asia.nikkei.com",
+    sub: {
+      top: { title: "Top", type: "realtime" },
+      business: { title: "Business", type: "realtime" },
+      economy: { title: "Economy", type: "realtime" },
+    },
+  },
+  "yahoofinance": {
+    name: "Yahoo Finance",
+    color: "violet",
+    column: "finance",
+    interval: Time.Fast,
+    type: "realtime",
+    home: "https://finance.yahoo.com",
+  },
+  "forexlive": {
+    name: "Forexlive",
+    color: "orange",
+    column: "finance",
+    interval: Time.Realtime,
+    home: "https://www.forexlive.com",
+    sub: {
+      news: { title: "Flash", type: "realtime" },
+      centralbank: { title: "Central Bank", type: "realtime" },
+    },
+  },
+  "fxstreet": {
+    name: "FXStreet",
+    color: "rose",
+    column: "finance",
+    interval: Time.Realtime,
+    type: "realtime",
+    title: "News",
+    home: "https://www.fxstreet.com",
+  },
+  "investing": {
+    name: "Investing",
+    color: "yellow",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://www.investing.com",
+    sub: {
+      economic: { title: "Economic", type: "realtime" },
+      forex: { title: "Forex", type: "realtime" },
+      commodities: { title: "Commodities", type: "realtime" },
+    },
+  },
+  "wsj": {
+    name: "WSJ",
+    color: "blue",
+    column: "finance",
+    interval: Time.Fast,
+    home: "https://www.wsj.com",
+    sub: {
+      markets: { title: "Markets", type: "realtime" },
+      world: { title: "World", type: "realtime" },
+    },
+  },
+  "benzinga": {
+    name: "Benzinga",
+    color: "lime",
+    column: "finance",
+    interval: Time.Fast,
+    type: "realtime",
+    title: "Markets",
+    home: "https://www.benzinga.com",
+  },
+  "oilprice": {
+    name: "OilPrice",
+    color: "neutral",
+    column: "finance",
+    interval: Time.Fast,
+    type: "realtime",
+    home: "https://oilprice.com",
+  },
+  "axios": {
+    name: "Axios",
+    color: "fuchsia",
+    column: "world",
+    interval: Time.Common,
+    type: "realtime",
+    home: "https://www.axios.com",
+  },
+  "fedpress": {
+    name: "Fed Press",
+    color: "emerald",
+    column: "finance",
+    interval: Time.Common,
+    type: "realtime",
+    title: "Releases",
+    home: "https://www.federalreserve.gov",
+  },
+  "coindesk": {
+    name: "CoinDesk",
+    color: "amber",
+    column: "finance",
+    interval: Time.Fast,
+    type: "realtime",
+    home: "https://www.coindesk.com",
+  },
+  "zerohedge": {
+    name: "ZeroHedge",
+    color: "zinc",
+    column: "finance",
+    interval: Time.Fast,
+    type: "realtime",
+    home: "https://www.zerohedge.com",
   },
 } as const satisfies Record<string, OriginSource>
 

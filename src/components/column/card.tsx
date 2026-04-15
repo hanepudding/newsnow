@@ -2,9 +2,10 @@ import type { NewsItem, SourceID, SourceResponse } from "@shared/types"
 import { useQuery } from "@tanstack/react-query"
 import { AnimatePresence, motion, useInView } from "framer-motion"
 import { useWindowSize } from "react-use"
-import { forwardRef, useImperativeHandle } from "react"
+import { forwardRef, useImperativeHandle, useMemo } from "react"
 import { OverlayScrollbar } from "../common/overlay-scrollbar"
 import { safeParseString } from "~/utils"
+import { refreshIntervalAtom, sortByTimeAtom } from "~/hooks/useSettings"
 
 export interface ItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   id: SourceID
@@ -13,6 +14,13 @@ export interface ItemsProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   isDragging?: boolean
   setHandleRef?: (ref: HTMLElement | null) => void
+  /**
+   * Skip the IntersectionObserver gate and mount NewsCard immediately.
+   * Use when the card is in a context where it's guaranteed to be
+   * visible (e.g. the single preview slot in the 更多 search bar), or
+   * where the caller wants to avoid the one-frame remount delay.
+   */
+  eager?: boolean
 }
 
 interface NewsCardProps {
@@ -20,12 +28,13 @@ interface NewsCardProps {
   setHandleRef?: (ref: HTMLElement | null) => void
 }
 
-export const CardWrapper = forwardRef<HTMLElement, ItemsProps>(({ id, isDragging, setHandleRef, style, ...props }, dndRef) => {
+export const CardWrapper = forwardRef<HTMLElement, ItemsProps>(({ id, isDragging, setHandleRef, eager, style, ...props }, dndRef) => {
   const ref = useRef<HTMLDivElement>(null)
 
-  const inView = useInView(ref, {
+  const observed = useInView(ref, {
     once: true,
   })
+  const inView = eager || observed
 
   useImperativeHandle(dndRef, () => ref.current! as HTMLDivElement)
 
@@ -52,6 +61,8 @@ export const CardWrapper = forwardRef<HTMLElement, ItemsProps>(({ id, isDragging
 
 function NewsCard({ id, setHandleRef }: NewsCardProps) {
   const { refresh } = useRefetch()
+  const refreshInterval = useAtomValue(refreshIntervalAtom)
+  const sortByTime = useAtomValue(sortByTimeAtom)
   const { data, isFetching, isError } = useQuery({
     queryKey: ["source", id],
     queryFn: async ({ queryKey }) => {
@@ -63,11 +74,15 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         const jwt = safeParseString(localStorage.getItem("jwt"))
         if (jwt) headers.Authorization = `Bearer ${jwt}`
         refetchSources.delete(id)
-      } else if (cacheSources.has(id)) {
-        // wait animation
-        await delay(200)
-        return cacheSources.get(id)
       }
+      // NOTE: previously there was an in-memory `cacheSources` short-circuit
+      // here that returned cached data if younger than one refresh interval.
+      // That blocked auto-refresh ticks from ever reaching the network and
+      // made manual refresh feel like it had a cooldown. We now always hit
+      // /api/s and let the server-side cache (which respects per-source
+      // update intervals, and is bypassed when `&latest` is set) dedupe
+      // upstream calls. `cacheSources.set` below is still kept so the rank
+      // diff computation for "hottest" sources still works.
 
       const response: SourceResponse = await myFetch(url, {
         headers,
@@ -95,7 +110,9 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
       return response
     },
     placeholderData: prev => prev,
-    staleTime: Infinity,
+    staleTime: refreshInterval > 0 ? Math.max(0, refreshInterval - 5_000) : Infinity,
+    refetchInterval: refreshInterval > 0 ? refreshInterval : false,
+    refetchIntervalInBackground: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -163,7 +180,9 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         defer
       >
         <div className={$("transition-opacity-500", isFetching && "op-20")}>
-          {!!data?.items?.length && (sources[id].type === "hottest" ? <NewsListHot items={data.items} /> : <NewsListTimeLine items={data.items} />)}
+          {!!data?.items?.length && (sources[id].type === "hottest"
+            ? <NewsListHot items={data.items} />
+            : <NewsListTimeLine items={data.items} sortByTime={sortByTime} />)}
         </div>
       </OverlayScrollbar>
     </>
@@ -259,11 +278,22 @@ function NewsListHot({ items }: { items: NewsItem[] }) {
   )
 }
 
-function NewsListTimeLine({ items }: { items: NewsItem[] }) {
+function itemTimestamp(item: NewsItem): number {
+  const raw = item.pubDate ?? item.extra?.date
+  if (raw == null) return 0
+  const t = typeof raw === "number" ? raw : new Date(raw).valueOf()
+  return Number.isFinite(t) ? t : 0
+}
+
+function NewsListTimeLine({ items, sortByTime }: { items: NewsItem[], sortByTime?: boolean }) {
   const { width } = useWindowSize()
+  const displayed = useMemo(() => {
+    if (!sortByTime) return items
+    return [...items].sort((a, b) => itemTimestamp(b) - itemTimestamp(a))
+  }, [items, sortByTime])
   return (
     <ol className="border-s border-neutral-400/50 flex flex-col ml-1">
-      {items?.map(item => (
+      {displayed?.map(item => (
         <li key={`${item.id}-${item.pubDate || item?.extra?.date || ""}`} className="flex flex-col">
           <span className="flex items-center gap-1 text-neutral-400/50 ml--1px">
             <span className="">-</span>

@@ -1,7 +1,5 @@
-import process from "node:process"
 import type { AllSourceID } from "@shared/types"
-import defu from "defu"
-import type { RSSHubOption, RSSHubInfo as RSSHubResponse, SourceGetter, SourceOption } from "#/types"
+import type { SourceGetter, SourceOption } from "#/types"
 
 type R = Partial<Record<AllSourceID, SourceGetter>>
 export function defineSource(source: SourceGetter): SourceGetter
@@ -23,34 +21,18 @@ export function defineRSSSource(url: string, option?: SourceOption): SourceGette
   }
 }
 
-export function defineRSSHubSource(route: string, RSSHubOptions?: RSSHubOption, sourceOption?: SourceOption): SourceGetter {
+// Build a Google News search RSS URL. Used as a reliable passthrough for
+// publishers that don't expose public RSS (Reuters, Bloomberg) or have
+// 403-prone feeds (WSJ). The `when:1d` operator limits to the last 24h.
+export function gnewsSource(query: string, option?: SourceOption): SourceGetter {
+  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`
+  const inner = defineRSSSource(url, option)
   return async () => {
-    // "https://rsshub.pseudoyu.com"
-    const RSSHubBase = "https://rsshub.rssforever.com"
-    const url = new URL(route, RSSHubBase)
-    url.searchParams.set("format", "json")
-    RSSHubOptions = defu<RSSHubOption, RSSHubOption[]>(RSSHubOptions, {
-      sorted: true,
-    })
-
-    Object.entries(RSSHubOptions).forEach(([key, value]) => {
-      url.searchParams.set(key, value.toString())
-    })
-    const data: RSSHubResponse = await myFetch(url)
-    return data.items.map(item => ({
-      title: item.title,
-      url: item.url,
-      id: item.id ?? item.url,
-      pubDate: !sourceOption?.hiddenDate ? item.date_published : undefined,
+    const items = await inner()
+    // Google News appends " - Publisher Name" to every title. Strip it.
+    return items.map(item => ({
+      ...item,
+      title: item.title.replace(/\s+-\s[^-]+$/, "").trim(),
     }))
   }
-}
-
-export function proxySource(proxyUrl: string, source: SourceGetter) {
-  return process.env.CF_PAGES
-    ? defineSource(async () => {
-        const data = await myFetch(proxyUrl)
-        return data.items
-      })
-    : source
 }

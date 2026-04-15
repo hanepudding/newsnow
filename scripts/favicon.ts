@@ -8,19 +8,33 @@ import { originSources } from "../shared/pre-sources"
 
 const projectDir = fileURLToPath(new URL("..", import.meta.url))
 const iconsDir = join(projectDir, "public", "icons")
-async function downloadImage(url: string, outputPath: string, id: string) {
+async function tryDownload(url: string): Promise<Buffer | null> {
   try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(`${id}: could not fetch ${url}, status: ${response.status}`)
-    }
-
-    const image = await (await fetch(url)).arrayBuffer()
-    fs.writeFileSync(outputPath, Buffer.from(image))
-    consola.success(`${id}: downloaded successfully.`)
-  } catch (error) {
-    consola.error(`${id}: error downloading the image. `, error)
+    const response = await fetch(url, { redirect: "follow" })
+    if (!response.ok) return null
+    const buf = Buffer.from(await response.arrayBuffer())
+    if (buf.byteLength < 100) return null
+    return buf
+  } catch {
+    return null
   }
+}
+
+async function downloadImage(host: string, outputPath: string, id: string) {
+  const sources = [
+    `https://icons.duckduckgo.com/ip3/${host}.ico`,
+    `https://www.google.com/s2/favicons?domain=${host}&sz=64`,
+    `https://icons.duckduckgo.com/ip3/${host.replace(/^www\./, "")}.ico`,
+  ]
+  for (const url of sources) {
+    const buf = await tryDownload(url)
+    if (buf) {
+      fs.writeFileSync(outputPath, buf)
+      consola.success(`${id}: downloaded successfully.`)
+      return
+    }
+  }
+  consola.error(`${id}: could not fetch favicon for ${host} from any provider.`)
 }
 
 async function main() {
@@ -33,7 +47,8 @@ async function main() {
           return
         }
         if (!source.home) return
-        await downloadImage(`https://icons.duckduckgo.com/ip3/${source.home.replace(/^https?:\/\//, "").replace(/\/$/, "")}.ico`, icon, id)
+        const host = source.home.replace(/^https?:\/\//, "").replace(/\/.*$/, "")
+        await downloadImage(host, icon, id)
       } catch (e) {
         consola.error(id, "\n", e)
       }

@@ -19,7 +19,7 @@
   "zhihu": {
     "name": "知乎",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.zhihu.com",
     "color": "blue",
     "interval": 600000
@@ -28,7 +28,7 @@
     "title": "实时热搜",
     "name": "微博",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://weibo.com",
     "color": "red",
     "interval": 120000
@@ -46,7 +46,7 @@
     "title": "今日最热",
     "name": "酷安",
     "type": "hottest",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://coolapk.com",
     "color": "green",
     "interval": 600000
@@ -108,7 +108,7 @@
     "redirect": "36kr-quick",
     "name": "36氪",
     "type": "realtime",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
     "interval": 600000,
@@ -117,7 +117,7 @@
   "36kr-quick": {
     "name": "36氪",
     "type": "realtime",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
     "interval": 600000,
@@ -126,7 +126,7 @@
   "36kr-renqi": {
     "name": "36氪",
     "type": "hottest",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
     "interval": 600000,
@@ -135,7 +135,7 @@
   "douyin": {
     "name": "抖音",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.douyin.com",
     "color": "gray",
     "interval": 600000
@@ -144,7 +144,7 @@
     "title": "主干道热帖",
     "name": "虎扑",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://hupu.com",
     "color": "red",
     "interval": 600000
@@ -153,7 +153,7 @@
     "title": "热议",
     "name": "百度贴吧",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://tieba.baidu.com",
     "color": "blue",
     "interval": 600000
@@ -325,7 +325,7 @@
   "producthunt": {
     "name": "Product Hunt",
     "type": "hottest",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://www.producthunt.com/",
     "color": "red",
     "interval": 600000
@@ -353,7 +353,7 @@
     "redirect": "bilibili-hot-search",
     "name": "哔哩哔哩",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
     "interval": 600000,
@@ -362,7 +362,7 @@
   "bilibili-hot-search": {
     "name": "哔哩哔哩",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
     "interval": 600000,
@@ -372,7 +372,7 @@
     "name": "哔哩哔哩",
     "type": "hottest",
     "disable": "cf",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
     "interval": 600000,
@@ -382,7 +382,7 @@
     "name": "哔哩哔哩",
     "type": "hottest",
     "disable": "cf",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
     "interval": 1800000,
@@ -392,7 +392,7 @@
     "name": "快手",
     "type": "hottest",
     "disable": "cf",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.kuaishou.com",
     "color": "orange",
     "interval": 600000
@@ -424,7 +424,7 @@
   "nowcoder": {
     "name": "牛客",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.nowcoder.com",
     "color": "blue",
     "interval": 600000
@@ -440,7 +440,7 @@
   "juejin": {
     "name": "稀土掘金",
     "type": "hottest",
-    "column": "tech",
+    "column": "deprecated",
     "home": "https://juejin.cn",
     "color": "blue",
     "interval": 600000
@@ -484,7 +484,7 @@
     "title": "热门电影",
     "name": "豆瓣",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.douban.com",
     "color": "green",
     "interval": 600000
@@ -521,7 +521,7 @@
     "title": "网络安全",
     "name": "Freebuf",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.freebuf.com/",
     "color": "green",
     "interval": 600000
@@ -530,7 +530,7 @@
     "redirect": "qqvideo-tv-hotsearch",
     "name": "腾讯视频",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://v.qq.com/channel/tv",
     "color": "blue",
     "interval": 1800000,
@@ -539,7 +539,7 @@
   "qqvideo-tv-hotsearch": {
     "name": "腾讯视频",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://v.qq.com/channel/tv",
     "color": "blue",
     "interval": 1800000,
@@ -549,7 +549,7 @@
     "redirect": "iqiyi-hot-ranklist",
     "name": "爱奇艺",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.iqiyi.com",
     "color": "green",
     "interval": 1800000,
@@ -558,10 +558,457 @@
   "iqiyi-hot-ranklist": {
     "name": "爱奇艺",
     "type": "hottest",
-    "column": "china",
+    "column": "deprecated",
     "home": "https://www.iqiyi.com",
     "color": "green",
     "interval": 1800000,
     "title": "热播榜"
+  },
+  "reuters": {
+    "redirect": "reuters-world",
+    "name": "Reuters",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.reuters.com",
+    "color": "orange",
+    "interval": 1800000,
+    "title": "World"
+  },
+  "reuters-world": {
+    "name": "Reuters",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.reuters.com",
+    "color": "orange",
+    "interval": 1800000,
+    "title": "World"
+  },
+  "reuters-business": {
+    "name": "Reuters",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.reuters.com",
+    "color": "orange",
+    "interval": 1800000,
+    "title": "Business"
+  },
+  "reuters-markets": {
+    "name": "Reuters",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.reuters.com",
+    "color": "orange",
+    "interval": 1800000,
+    "title": "Markets"
+  },
+  "apnews": {
+    "redirect": "apnews-top",
+    "name": "AP News",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://apnews.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Top"
+  },
+  "apnews-top": {
+    "name": "AP News",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://apnews.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Top"
+  },
+  "apnews-business": {
+    "name": "AP News",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://apnews.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Business"
+  },
+  "apnews-world": {
+    "name": "AP News",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://apnews.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "World"
+  },
+  "marketwatch": {
+    "redirect": "marketwatch-top",
+    "name": "MarketWatch",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.marketwatch.com",
+    "color": "green",
+    "interval": 300000,
+    "title": "Top Stories"
+  },
+  "marketwatch-top": {
+    "name": "MarketWatch",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.marketwatch.com",
+    "color": "green",
+    "interval": 300000,
+    "title": "Top Stories"
+  },
+  "marketwatch-pulse": {
+    "name": "MarketWatch",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.marketwatch.com",
+    "color": "green",
+    "interval": 300000,
+    "title": "Market Pulse"
+  },
+  "marketwatch-bulletins": {
+    "name": "MarketWatch",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.marketwatch.com",
+    "color": "green",
+    "interval": 300000,
+    "title": "Bulletins"
+  },
+  "cnbc": {
+    "redirect": "cnbc-top",
+    "name": "CNBC",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.cnbc.com",
+    "color": "indigo",
+    "interval": 300000,
+    "title": "Top News"
+  },
+  "cnbc-top": {
+    "name": "CNBC",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.cnbc.com",
+    "color": "indigo",
+    "interval": 300000,
+    "title": "Top News"
+  },
+  "cnbc-markets": {
+    "name": "CNBC",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.cnbc.com",
+    "color": "indigo",
+    "interval": 300000,
+    "title": "Markets"
+  },
+  "cnbc-world": {
+    "name": "CNBC",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.cnbc.com",
+    "color": "indigo",
+    "interval": 300000,
+    "title": "World"
+  },
+  "bloomberg": {
+    "redirect": "bloomberg-markets",
+    "name": "Bloomberg",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.bloomberg.com",
+    "color": "orange",
+    "interval": 300000,
+    "title": "Markets"
+  },
+  "bloomberg-markets": {
+    "name": "Bloomberg",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.bloomberg.com",
+    "color": "orange",
+    "interval": 300000,
+    "title": "Markets"
+  },
+  "bloomberg-politics": {
+    "name": "Bloomberg",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.bloomberg.com",
+    "color": "orange",
+    "interval": 300000,
+    "title": "Politics"
+  },
+  "bloomberg-tech": {
+    "name": "Bloomberg",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.bloomberg.com",
+    "color": "orange",
+    "interval": 300000,
+    "title": "Technology"
+  },
+  "seekingalpha": {
+    "redirect": "seekingalpha-currents",
+    "name": "Seeking Alpha",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://seekingalpha.com",
+    "color": "amber",
+    "interval": 300000,
+    "title": "Market Currents"
+  },
+  "seekingalpha-currents": {
+    "name": "Seeking Alpha",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://seekingalpha.com",
+    "color": "amber",
+    "interval": 300000,
+    "title": "Market Currents"
+  },
+  "seekingalpha-articles": {
+    "name": "Seeking Alpha",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://seekingalpha.com",
+    "color": "amber",
+    "interval": 300000,
+    "title": "Articles"
+  },
+  "ft": {
+    "redirect": "ft-world",
+    "name": "Financial Times",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.ft.com",
+    "color": "rose",
+    "interval": 1800000,
+    "title": "World"
+  },
+  "ft-world": {
+    "name": "Financial Times",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.ft.com",
+    "color": "rose",
+    "interval": 1800000,
+    "title": "World"
+  },
+  "ft-companies": {
+    "name": "Financial Times",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.ft.com",
+    "color": "rose",
+    "interval": 1800000,
+    "title": "Companies"
+  },
+  "ft-markets": {
+    "name": "Financial Times",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.ft.com",
+    "color": "rose",
+    "interval": 1800000,
+    "title": "Markets"
+  },
+  "nikkei": {
+    "redirect": "nikkei-top",
+    "name": "Nikkei Asia",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://asia.nikkei.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Top"
+  },
+  "nikkei-top": {
+    "name": "Nikkei Asia",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://asia.nikkei.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Top"
+  },
+  "nikkei-business": {
+    "name": "Nikkei Asia",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://asia.nikkei.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Business"
+  },
+  "nikkei-economy": {
+    "name": "Nikkei Asia",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://asia.nikkei.com",
+    "color": "red",
+    "interval": 1800000,
+    "title": "Economy"
+  },
+  "yahoofinance": {
+    "name": "Yahoo Finance",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://finance.yahoo.com",
+    "color": "violet",
+    "interval": 300000
+  },
+  "forexlive": {
+    "redirect": "forexlive-news",
+    "name": "Forexlive",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.forexlive.com",
+    "color": "orange",
+    "interval": 120000,
+    "title": "Flash"
+  },
+  "forexlive-news": {
+    "name": "Forexlive",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.forexlive.com",
+    "color": "orange",
+    "interval": 120000,
+    "title": "Flash"
+  },
+  "forexlive-centralbank": {
+    "name": "Forexlive",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.forexlive.com",
+    "color": "orange",
+    "interval": 120000,
+    "title": "Central Bank"
+  },
+  "fxstreet": {
+    "title": "News",
+    "name": "FXStreet",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.fxstreet.com",
+    "color": "rose",
+    "interval": 120000
+  },
+  "investing": {
+    "redirect": "investing-economic",
+    "name": "Investing",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.investing.com",
+    "color": "yellow",
+    "interval": 300000,
+    "title": "Economic"
+  },
+  "investing-economic": {
+    "name": "Investing",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.investing.com",
+    "color": "yellow",
+    "interval": 300000,
+    "title": "Economic"
+  },
+  "investing-forex": {
+    "name": "Investing",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.investing.com",
+    "color": "yellow",
+    "interval": 300000,
+    "title": "Forex"
+  },
+  "investing-commodities": {
+    "name": "Investing",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.investing.com",
+    "color": "yellow",
+    "interval": 300000,
+    "title": "Commodities"
+  },
+  "wsj": {
+    "redirect": "wsj-markets",
+    "name": "WSJ",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.wsj.com",
+    "color": "blue",
+    "interval": 300000,
+    "title": "Markets"
+  },
+  "wsj-markets": {
+    "name": "WSJ",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.wsj.com",
+    "color": "blue",
+    "interval": 300000,
+    "title": "Markets"
+  },
+  "wsj-world": {
+    "name": "WSJ",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.wsj.com",
+    "color": "blue",
+    "interval": 300000,
+    "title": "World"
+  },
+  "benzinga": {
+    "title": "Markets",
+    "name": "Benzinga",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.benzinga.com",
+    "color": "lime",
+    "interval": 300000
+  },
+  "oilprice": {
+    "name": "OilPrice",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://oilprice.com",
+    "color": "neutral",
+    "interval": 300000
+  },
+  "axios": {
+    "name": "Axios",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://www.axios.com",
+    "color": "fuchsia",
+    "interval": 1800000
+  },
+  "fedpress": {
+    "title": "Releases",
+    "name": "Fed Press",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.federalreserve.gov",
+    "color": "emerald",
+    "interval": 1800000
+  },
+  "coindesk": {
+    "name": "CoinDesk",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.coindesk.com",
+    "color": "amber",
+    "interval": 300000
+  },
+  "zerohedge": {
+    "name": "ZeroHedge",
+    "type": "realtime",
+    "column": "finance",
+    "home": "https://www.zerohedge.com",
+    "color": "zinc",
+    "interval": 300000
   }
 }

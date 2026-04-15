@@ -27,21 +27,6 @@ export interface CacheRow {
   updated: number
 }
 
-export interface RSSHubInfo {
-  title: string
-  home_page_url: string
-  description: string
-  items: RSSHubItem[]
-}
-
-export interface RSSHubItem {
-  id: string
-  url: string
-  title: string
-  content_html: string
-  date_published: string
-}
-
 export interface UserInfo {
   id: string
   email: string
@@ -49,13 +34,6 @@ export interface UserInfo {
   data: string
   created: number
   updated: number
-}
-
-export interface RSSHubOption {
-  // default: true
-  sorted?: boolean
-  // default: 20
-  limit?: number
 }
 
 export interface SourceOption {

@@ -29,6 +29,9 @@ function groupByColumn(items: SourceItemProps[]) {
     if (m.column === "科技") return -1
     if (n.column === "科技") return 1
 
+    // Always park these at the very end, in this order.
+    if (m.column === "deprecated") return 1
+    if (n.column === "deprecated") return -1
     if (m.column === "未分类") return 1
     if (n.column === "未分类") return -1
 
@@ -102,7 +105,16 @@ export function SearchBar() {
           </Command.List>
         </OverlayScrollbar>
         <div className="flex-1 pt-2 px-4 min-w-350px max-md:hidden">
-          <CardWrapper id={value} />
+          {/*
+            key={value}: forces a full CardWrapper remount on source change.
+              Without it, React Query's `placeholderData: prev => prev` keeps
+              the previous source's items on screen forever when the new
+              fetch hangs or errors.
+            eager: skips the IntersectionObserver gate (the preview pane is
+              always visible once the dialog is open, so lazy-mounting adds
+              a one-frame empty flash on every remount).
+          */}
+          <CardWrapper key={value} id={value} eager />
         </div>
       </div>
     </Command.Dialog>

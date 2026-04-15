@@ -1,10 +1,36 @@
 import { XMLParser } from "fast-xml-parser"
 import type { RSSInfo } from "../types"
 
+// Decode HTML entities that leak through double-encoded RSS titles
+// (common in WSJ, Benzinga, etc. where source sends `&amp;#x2019;` and
+// fast-xml-parser only unwraps one layer).
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: "\"",
+  apos: "'",
+  nbsp: " ",
+}
+function decodeEntities(s: string): string {
+  if (!s || typeof s !== "string" || !s.includes("&")) return s
+  return s.replace(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (full, code) => {
+    if (code[0] === "#") {
+      const cp = code[1] === "x" || code[1] === "X"
+        ? Number.parseInt(code.slice(2), 16)
+        : Number.parseInt(code.slice(1), 10)
+      return Number.isFinite(cp) ? String.fromCodePoint(cp) : full
+    }
+    return NAMED_ENTITIES[code.toLowerCase()] ?? full
+  })
+}
+
 export async function rss2json(url: string): Promise<RSSInfo | undefined> {
   if (!/^https?:\/\/[^\s$.?#].\S*/i.test(url)) return
 
-  const data = await myFetch(url)
+  // Force text parsing — ofetch's content-type autodetect mis-handles some
+  // feeds (e.g. Bloomberg's application/rss+xml returns `{}`).
+  const data = await myFetch(url, { responseType: "text" })
 
   const xml = new XMLParser({
     attributeNamePrefix: "",
@@ -36,7 +62,7 @@ export async function rss2json(url: string): Promise<RSSInfo | undefined> {
 
     const obj = {
       id: val.guid && val.guid.$text ? val.guid.$text : val.id,
-      title: val.title && val.title.$text ? val.title.$text : val.title,
+      title: decodeEntities(val.title && val.title.$text ? val.title.$text : val.title),
       description: val.summary && val.summary.$text ? val.summary.$text : val.description,
       link: val.link && val.link.href ? val.link.href : val.link,
       author: val.author && val.author.name ? val.author.name : val["dc:creator"],

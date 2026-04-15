@@ -4,6 +4,7 @@ import type { SourceID } from "@shared/types"
 import { NavBar } from "../navbar"
 import { Menu } from "./menu"
 import { currentSourcesAtom, goToTopAtom } from "~/atoms"
+import { REFRESH_INTERVAL_OPTIONS, refreshIntervalAtom, sortByTimeAtom } from "~/hooks/useSettings"
 
 function GoTop() {
   const { ok, fn: goToTop } = useAtomValue(goToTopAtom)
@@ -17,16 +18,15 @@ function GoTop() {
   )
 }
 
-function Github() {
-  return (
-    <button type="button" title="Github" className="i-ph:github-logo-duotone btn" onClick={() => window.open(Homepage)} />
-  )
-}
-
-function Refresh() {
+// Combined manual refresh + auto-refresh interval selector. Click the icon
+// to refresh now. The small label beside it ("30s") is a native select that
+// sets the auto-refresh interval.
+function RefreshCluster() {
   const currentSources = useAtomValue(currentSourcesAtom)
   const { refresh } = useRefetch()
   const refreshAll = useCallback(() => refresh(...currentSources), [refresh, currentSources])
+  const [interval, setInterval] = useAtom(refreshIntervalAtom)
+  const currentLabel = REFRESH_INTERVAL_OPTIONS.find(o => o.value === interval)?.label ?? `${Math.round(interval / 1000)}s`
 
   const isFetching = useIsFetching({
     predicate: (query) => {
@@ -36,11 +36,41 @@ function Refresh() {
   })
 
   return (
+    <span className="flex items-center gap-1">
+      <button
+        type="button"
+        title="立即刷新"
+        className={$("i-ph:arrow-counter-clockwise-duotone btn", isFetching && "animate-spin i-ph:circle-dashed-duotone")}
+        onClick={refreshAll}
+      />
+      <span className="relative text-xs font-mono op-70 hover:op-100 transition-opacity">
+        <span className={$("tabular-nums", interval === 0 && "op-50")}>{currentLabel}</span>
+        <select
+          title="自动刷新间隔"
+          value={interval}
+          onChange={e => setInterval(Number(e.target.value))}
+          className="absolute inset-0 opacity-0 cursor-pointer w-full"
+        >
+          {REFRESH_INTERVAL_OPTIONS.map(opt => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+      </span>
+    </span>
+  )
+}
+
+function SortByTime() {
+  const [sortByTime, setSortByTime] = useAtom(sortByTimeAtom)
+  return (
     <button
       type="button"
-      title="Refresh"
-      className={$("i-ph:arrow-counter-clockwise-duotone btn", isFetching && "animate-spin i-ph:circle-dashed-duotone")}
-      onClick={refreshAll}
+      title={sortByTime ? "按时间排序" : "默认顺序"}
+      className={$(
+        "btn",
+        sortByTime ? "i-ph:clock-countdown-duotone" : "i-ph:list-bullets-duotone",
+      )}
+      onClick={() => setSortByTime(!sortByTime)}
     />
   )
 }
@@ -70,8 +100,8 @@ export function Header() {
       </span>
       <span className="justify-self-end flex gap-2 items-center text-xl text-primary-600 dark:text-primary">
         <GoTop />
-        <Refresh />
-        <Github />
+        <SortByTime />
+        <RefreshCluster />
         <Menu />
       </span>
     </>

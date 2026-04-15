@@ -26,7 +26,8 @@ export default defineEventHandler(async (event): Promise<SourceResponse> => {
       // if (cache) {
         // interval 刷新间隔，对于缓存失效也要执行的。本质上表示本来内容更新就很慢，这个间隔内可能内容压根不会更新。
         // 默认 10 分钟，是低于 TTL 的，但部分 Source 的更新间隔会超过 TTL，甚至有的一天更新一次。
-        if (now - cache.updated < sources[id].interval) {
+        // 当用户显式点击刷新 (latest=true) 时绕过此检查，保证手动刷新一定落到上游。
+        if (!latest && now - cache.updated < sources[id].interval) {
           return {
             status: "success",
             id,
