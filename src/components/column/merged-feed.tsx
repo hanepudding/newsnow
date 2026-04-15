@@ -1,14 +1,14 @@
 // The "terminal" view: a two-column dashboard where each column is a
-// time-sorted timeline merged from whatever tab the user picks at
-// runtime. Each column has its own independent source-column atom so
-// you can run e.g. Finance Bro next to 关注 at the same time.
+// time-sorted timeline merged from whatever watchlist the user picks at
+// runtime. Each column has its own independent watchlist-id atom so
+// you can run e.g. Finance Bro next to Press at the same time.
 //
 // Each MergedFeedColumn reuses the /api/s?id=... endpoint (and its
-// server-side cache) via useQueries, so if the source tab is visited
-// the same queries back both views.
+// server-side cache) via useQueries, so if the source watchlist tab is
+// visited the same queries back both views.
 
 import type { PrimitiveAtom } from "jotai"
-import type { FixedColumnID, NewsItem, SourceID, SourceResponse } from "@shared/types"
+import type { NewsItem, SourceID, SourceResponse } from "@shared/types"
 import { useQueries } from "@tanstack/react-query"
 import { useWindowSize } from "react-use"
 import { OverlayScrollbar } from "../common/overlay-scrollbar"
@@ -17,6 +17,7 @@ import {
   terminalLeftSourceColumnAtom,
   terminalRightSourceColumnAtom,
 } from "~/hooks/useSettings"
+import { watchlistsAtom } from "~/atoms"
 
 interface MergedItem extends NewsItem {
   __source: SourceID
@@ -73,23 +74,22 @@ function MergedItemRow({ item }: { item: MergedItem }) {
   )
 }
 
-// Build the list of tabs the user can aggregate FROM. Always excludes
-// "terminal" itself to avoid recursion.
-function useAggregableTabs(): FixedColumnID[] {
-  return useMemo(() => fixedColumnIds.filter(id => id !== "terminal") as FixedColumnID[], [])
-}
-
 function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> }) {
   const refreshInterval = useAtomValue(refreshIntervalAtom)
   const [sourceColumn, setSourceColumn] = useAtom(sourceAtom)
-  const tabs = useAggregableTabs()
+  const watchlists = useAtomValue(watchlistsAtom)
 
-  // Validate stored column — fall back to the first available tab if the
-  // user's saved choice no longer exists (e.g. after a tab removal).
-  const effectiveColumn = (tabs.includes(sourceColumn as FixedColumnID) ? sourceColumn : tabs[0]) as FixedColumnID
+  // Resolve the selected watchlist. If the stored id no longer exists
+  // (user deleted the watchlist), fall back to the first available one.
+  const effective = useMemo(() => {
+    const match = watchlists.find(w => w.id === sourceColumn)
+    if (match) return match
+    return watchlists[0]
+  }, [watchlists, sourceColumn])
 
-  const primitiveMetadata = useAtomValue(primitiveMetadataAtom)
-  const sourceIds = primitiveMetadata.data[effectiveColumn] ?? []
+  const sourceIds = effective?.sources ?? []
+  const effectiveId = effective?.id ?? ""
+  const effectiveName = effective?.name ?? "—"
 
   const queries = useQueries({
     queries: sourceIds.map(id => ({
@@ -122,7 +122,7 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
     })
     merged.sort((a, b) => itemTimestamp(b) - itemTimestamp(a))
     return merged
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queries.map(q => q.dataUpdatedAt).join(","), sourceIds.join(",")])
 
   return (
@@ -135,18 +135,18 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
             <span className="op-60">aggregating</span>
             <span className="relative font-mono">
               <span className="px-1 rounded bg-neutral-400/15 border border-neutral-400/20">
-                {metadata[effectiveColumn]?.name ?? effectiveColumn}
+                {effectiveName}
                 <span className="i-ph:caret-down ml-0.5 text-[10px] align-middle" />
               </span>
               <select
                 title="切换聚合来源"
-                value={effectiveColumn}
+                value={effectiveId}
                 onChange={e => setSourceColumn(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full"
               >
-                {tabs.map(id => (
-                  <option key={id} value={id}>
-                    {metadata[id]?.name ?? id}
+                {watchlists.map(w => (
+                  <option key={w.id} value={w.id}>
+                    {w.name}
                   </option>
                 ))}
               </select>
@@ -168,14 +168,14 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
         ? (
             <div className="text-center op-60 py-12 flex-1">
               <p className="mb-2">
-                {metadata[effectiveColumn]?.name ?? effectiveColumn}
+                {effectiveName}
                 {" "}
                 是空的
               </p>
               <p className="text-xs op-70">
-                {effectiveColumn === "focus"
-                  ? "点击任意新闻卡片右上角的 ⭐ 把来源加入关注。"
-                  : "切换到另一个来源 tab，或者先在那个 tab 里加点源。"}
+                {watchlists.length === 0
+                  ? "你目前没有任何 watchlist。通过右上角的 ··· 菜单管理 watchlists。"
+                  : "切换到另一个 watchlist，或者在那个 tab 里加点源。"}
               </p>
             </div>
           )

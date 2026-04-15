@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { manageWatchlistsOpenAtom } from "~/components/watchlists/manage-modal"
 
 // function ThemeToggle() {
 //   const { isDark, toggleDark } = useDark()
@@ -15,6 +16,7 @@ import { motion } from "framer-motion"
 export function Menu() {
   const { loggedIn, login, logout, userInfo, enableLogin } = useLogin()
   const [shown, show] = useState(false)
+  const openManage = useSetAtom(manageWatchlistsOpenAtom)
   return (
     <span className="relative" onMouseEnter={() => show(true)} onMouseLeave={() => show(false)}>
       <span className="flex items-center scale-90">
@@ -65,6 +67,16 @@ export function Menu() {
                     </li>
                   ))}
               {/* <ThemeToggle /> */}
+              <li
+                onClick={() => {
+                  openManage(true)
+                  show(false)
+                }}
+                className="cursor-pointer [&_*]:cursor-pointer transition-all"
+              >
+                <span className="i-ph:list-star-duotone inline-block" />
+                <span>Manage watchlists</span>
+              </li>
               <li onClick={() => window.open(Homepage)} className="cursor-pointer [&_*]:cursor-pointer transition-all">
                 <span className="i-ph:github-logo-duotone inline-block" />
                 <span>Star on Github </span>

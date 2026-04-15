@@ -10,6 +10,7 @@ import { GlobalOverlayScrollbar } from "~/components/common/overlay-scrollbar"
 import { Footer } from "~/components/footer"
 import { Toast } from "~/components/common/toast"
 import { SearchBar } from "~/components/common/search-bar"
+import { ManageWatchlistsModal } from "~/components/watchlists/manage-modal"
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -27,7 +28,6 @@ function NotFoundComponent() {
 
 function RootComponent() {
   useOnReload()
-  useSync()
   usePWA()
   return (
     <>
@@ -66,6 +66,7 @@ function RootComponent() {
       </GlobalOverlayScrollbar>
       <Toast />
       <SearchBar />
+      <ManageWatchlistsModal />
       {import.meta.env.DEV && (
         <>
           <ReactQueryDevtools buttonPosition="bottom-left" />

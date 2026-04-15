@@ -124,13 +124,17 @@ export function SearchBar() {
 function SourceItem({ item }: {
   item: SourceItemProps
 }) {
-  const { isFocused, toggleFocus } = useFocusWith(item.id)
+  // Quick add/remove toggles membership in the FIRST watchlist (Press
+  // by default). For multi-list membership, the user can star from
+  // the card preview on the right instead, which uses the full popover.
+  const { entries, isInAny, toggleInList } = useWatchlistMembership(item.id)
+  const primary = entries[0]
   return (
     <Command.Item
       keywords={[item.name, item.title ?? "", item.pinyin]}
       value={item.id}
       className="flex justify-between items-center p-2"
-      onSelect={toggleFocus}
+      onSelect={() => primary && toggleInList(primary.id)}
     >
       <span className="flex gap-2 items-center">
         <span
@@ -142,7 +146,7 @@ function SourceItem({ item }: {
         <span>{item.name}</span>
         <span className="text-xs text-neutral-400/80 self-end mb-3px">{item.title}</span>
       </span>
-      <span className={$(isFocused ? "i-ph-star-fill" : "i-ph-star-duotone", "bg-primary op-40")}></span>
+      <span className={$(isInAny ? "i-ph-star-fill" : "i-ph-star-duotone", "bg-primary op-40")}></span>
     </Command.Item>
   )
 }
