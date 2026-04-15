@@ -677,6 +677,24 @@ export const originSources = {
     type: "realtime",
     home: "https://www.zerohedge.com",
   },
+  "trumpstruth": {
+    name: "Trump Truth",
+    color: "red",
+    column: "world",
+    interval: Time.Fast,
+    type: "realtime",
+    title: "via trumpstruth.org",
+    home: "https://trumpstruth.org",
+  },
+  "clashreport": {
+    name: "Clash Report",
+    color: "neutral",
+    column: "world",
+    interval: Time.Fast,
+    type: "realtime",
+    title: "via t.me",
+    home: "https://t.me/s/ClashReport",
+  },
 } as const satisfies Record<string, OriginSource>
 
 export function genSources() {

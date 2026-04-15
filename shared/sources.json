@@ -1010,5 +1010,23 @@
     "home": "https://www.zerohedge.com",
     "color": "zinc",
     "interval": 300000
+  },
+  "trumpstruth": {
+    "title": "via trumpstruth.org",
+    "name": "Trump Truth",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://trumpstruth.org",
+    "color": "red",
+    "interval": 300000
+  },
+  "clashreport": {
+    "title": "via t.me",
+    "name": "Clash Report",
+    "type": "realtime",
+    "column": "world",
+    "home": "https://t.me/s/ClashReport",
+    "color": "neutral",
+    "interval": 300000
   }
 }
