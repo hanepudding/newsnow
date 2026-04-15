@@ -171,7 +171,6 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
       <OverlayScrollbar
         className={$([
           "h-full p-2 overflow-y-auto rounded-2xl bg-base bg-op-70!",
-          isFetching && `animate-pulse`,
           `sprinkle-${sources[id].color}`,
         ])}
         options={{
@@ -179,11 +178,9 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         }}
         defer
       >
-        <div className={$("transition-opacity-500", isFetching && "op-20")}>
-          {!!data?.items?.length && (sources[id].type === "hottest"
-            ? <NewsListHot items={data.items} />
-            : <NewsListTimeLine items={data.items} sortByTime={sortByTime} />)}
-        </div>
+        {!!data?.items?.length && (sources[id].type === "hottest"
+          ? <NewsListHot items={data.items} />
+          : <NewsListTimeLine items={data.items} sortByTime={sortByTime} />)}
       </OverlayScrollbar>
     </>
   )

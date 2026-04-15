@@ -126,11 +126,7 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
   }, [queries.map(q => q.dataUpdatedAt).join(","), sourceIds.join(",")])
 
   return (
-    <div className={$(
-      "bg-base bg-op-70! backdrop-blur-md rounded-2xl p-4 md:p-5 h-full flex flex-col",
-      isFetchingAny && "animate-pulse",
-    )}
-    >
+    <div className="bg-base bg-op-70! backdrop-blur-md rounded-2xl p-4 md:p-5 h-full flex flex-col">
       <div className="flex items-center justify-between mb-3 px-1 flex-wrap gap-2">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="i-ph:terminal-window-duotone text-xl op-70" />

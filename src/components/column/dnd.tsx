@@ -6,7 +6,6 @@ import { reorderWithEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/r
 import { createPortal } from "react-dom"
 import { useThrottleFn } from "ahooks"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { motion } from "framer-motion"
 import { useWindowSize } from "react-use"
 import { isMobile } from "react-device-detect"
 import { DndContext } from "../common/dnd"
@@ -33,7 +32,7 @@ export function Dnd() {
   return (
     <DndWrapper items={items} setItems={setItems} isSingleColumn={isMobile}>
       <OverlayScrollbar defer className="overflow-x-auto">
-        <motion.ol
+        <ol
           className={isMobile
             ? "flex px-2 gap-6 pb-4 scroll-smooth"
             : "grid w-full gap-6"}
@@ -45,45 +44,17 @@ export function Dnd() {
             : {
                 gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
               }}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {
-              opacity: 0,
-            },
-            visible: {
-              opacity: 1,
-              transition: {
-                delayChildren: 0.1,
-                staggerChildren: 0.1,
-              },
-            },
-          }}
         >
           {items.map((id, index) => (
-            <motion.li
+            <li
               key={id}
               className={$(isMobile && "flex-shrink-0", isMobile && index === items.length - 1 && "mr-2")}
               style={isMobile ? { width: `${width - 16 > WIDTH ? WIDTH : width - 16}px` } : undefined}
-              transition={{
-                type: "tween",
-                duration: AnimationDuration / 1000,
-              }}
-              variants={{
-                hidden: {
-                  y: 20,
-                  opacity: 0,
-                },
-                visible: {
-                  y: 0,
-                  opacity: 1,
-                },
-              }}
             >
               <SortableCardWrapper id={id} />
-            </motion.li>
+            </li>
           ))}
-        </motion.ol>
+        </ol>
       </OverlayScrollbar>
       {isMobile && (
         <div className="flex justify-center">
