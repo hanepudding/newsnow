@@ -17,6 +17,7 @@ import {
   terminalLeftSourceColumnAtom,
   terminalRightSourceColumnAtom,
 } from "~/hooks/useSettings"
+import { useTranslatedTitle } from "~/hooks/useTranslate"
 import { watchlistsAtom } from "~/atoms"
 
 interface MergedItem extends NewsItem {
@@ -39,6 +40,7 @@ function MergedItemRow({ item }: { item: MergedItem }) {
   const source = sources[item.__source]
   const baseId = item.__source.split("-")[0]
   const relative = useRelativeTimeFromTs(itemTimestamp(item))
+  const displayTitle = useTranslatedTitle(item.title)
 
   return (
     <li className="flex flex-col gap-0.5 border-s border-neutral-400/30 pl-3 ml-1 pb-2 relative">
@@ -68,7 +70,7 @@ function MergedItemRow({ item }: { item: MergedItem }) {
         title={item.extra?.hover}
         className="text-base leading-snug hover:bg-neutral-400/10 rounded-md px-1 -mx-1 visited:(text-neutral-400/80)"
       >
-        {item.title}
+        {displayTitle}
       </a>
     </li>
   )

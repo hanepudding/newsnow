@@ -4,7 +4,13 @@ import type { SourceID } from "@shared/types"
 import { NavBar } from "../navbar"
 import { Menu } from "./menu"
 import { currentSourcesAtom, goToTopAtom } from "~/atoms"
-import { REFRESH_INTERVAL_OPTIONS, refreshIntervalAtom, sortByTimeAtom } from "~/hooks/useSettings"
+import {
+  REFRESH_INTERVAL_OPTIONS,
+  TRANSLATE_OPTIONS,
+  refreshIntervalAtom,
+  sortByTimeAtom,
+  translateTargetAtom,
+} from "~/hooks/useSettings"
 
 function GoTop() {
   const { ok, fn: goToTop } = useAtomValue(goToTopAtom)
@@ -75,6 +81,38 @@ function SortByTime() {
   )
 }
 
+// Translation language selector. Off means no outbound calls to
+// translate.googleapis.com. Anything else triggers per-headline
+// translation (cached client-side).
+function TranslateSelector() {
+  const [target, setTarget] = useAtom(translateTargetAtom)
+  const current = TRANSLATE_OPTIONS.find(o => o.value === target) ?? TRANSLATE_OPTIONS[0]
+  return (
+    <span className="relative inline-flex items-center">
+      <span
+        className={$(
+          "btn i-ph:translate-duotone",
+          target === "off" && "op-40",
+        )}
+        title={target === "off" ? "翻译: 关闭" : `翻译到 ${current.label}`}
+      />
+      {target !== "off" && (
+        <span className="text-xs font-mono op-70 -ml-0.5 pointer-events-none">{current.label}</span>
+      )}
+      <select
+        title="翻译语言"
+        value={target}
+        onChange={e => setTarget(e.target.value as any)}
+        className="absolute inset-0 opacity-0 cursor-pointer w-full"
+      >
+        {TRANSLATE_OPTIONS.map(opt => (
+          <option key={opt.value} value={opt.value}>{opt.label}</option>
+        ))}
+      </select>
+    </span>
+  )
+}
+
 export function Header() {
   return (
     <>
@@ -100,6 +138,7 @@ export function Header() {
       </span>
       <span className="justify-self-end flex gap-2 items-center text-xl text-primary-600 dark:text-primary">
         <GoTop />
+        <TranslateSelector />
         <SortByTime />
         <RefreshCluster />
         <Menu />

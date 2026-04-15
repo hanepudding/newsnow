@@ -7,6 +7,7 @@ import { OverlayScrollbar } from "../common/overlay-scrollbar"
 import { StarPopover } from "../watchlists/star-popover"
 import { safeParseString } from "~/utils"
 import { refreshIntervalAtom, sortByTimeAtom } from "~/hooks/useSettings"
+import { useTranslatedTitle } from "~/hooks/useTranslate"
 
 export interface ItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   id: SourceID
@@ -237,6 +238,14 @@ function NewsUpdatedTime({ date }: { date: string | number }) {
   const relativeTime = useRelativeTime(date)
   return <>{relativeTime}</>
 }
+// Translate-aware title wrapper. If translation is off, returns the
+// original string. Otherwise returns the translated version (or the
+// original as fallback while loading / on error).
+function Title({ text }: { text: string }) {
+  const display = useTranslatedTitle(text)
+  return <>{display}</>
+}
+
 function NewsListHot({ items }: { items: NewsItem[] }) {
   const { width } = useWindowSize()
   return (
@@ -258,7 +267,7 @@ function NewsListHot({ items }: { items: NewsItem[] }) {
           {!!item.extra?.diff && <DiffNumber diff={item.extra.diff} />}
           <span className="self-start line-height-none">
             <span className="mr-2 text-base">
-              {item.title}
+              <Title text={item.title} />
             </span>
             <span className="text-xs text-neutral-400/80 truncate align-middle">
               <ExtraInfo item={item} />
@@ -306,7 +315,7 @@ function NewsListTimeLine({ items, sortByTime }: { items: NewsItem[], sortByTime
             target="_blank"
             rel="noopener noreferrer"
           >
-            {item.title}
+            <Title text={item.title} />
           </a>
         </li>
       ))}

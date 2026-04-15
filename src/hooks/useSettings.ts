@@ -24,8 +24,35 @@ export const REFRESH_INTERVAL_OPTIONS = [
 export const refreshIntervalAtom = atomWithStorage<number>("refresh-interval", 15_000)
 export const sortByTimeAtom = atomWithStorage<boolean>("sort-by-time", false)
 
-// Which tabs the two Terminal columns aggregate from. Any fixedColumnID
-// except "terminal" itself is valid. Defaults: left = finance-bro, right
-// = focus. Each column remembers its own selection independently.
+// Which watchlists the two Terminal columns aggregate from. Any
+// watchlist id is valid. Defaults: left = finance-bro, right = press.
+// Each column remembers its own selection independently.
 export const terminalLeftSourceColumnAtom = atomWithStorage<string>("terminal-left-source-column", "finance-bro")
-export const terminalRightSourceColumnAtom = atomWithStorage<string>("terminal-right-source-column", "focus")
+export const terminalRightSourceColumnAtom = atomWithStorage<string>("terminal-right-source-column", "press")
+
+// ---------------------------------------------------------------------
+// Translation
+// ---------------------------------------------------------------------
+// Target language for headline translation. "off" disables the feature
+// and no outbound requests are made. Anything else is a valid language
+// code for Google Translate (zh-CN, en, ja, ru, es, fr, de, ko, ...).
+//
+// When enabled, user's titles are POSTed to /api/translate which
+// proxies translate.googleapis.com. Results are cached client-side
+// in localStorage by (text, target) hash to minimize network.
+
+export const TRANSLATE_OPTIONS = [
+  { value: "off", label: "Off" },
+  { value: "zh-CN", label: "中文" },
+  { value: "en", label: "English" },
+  { value: "ja", label: "日本語" },
+  { value: "ko", label: "한국어" },
+  { value: "ru", label: "Русский" },
+  { value: "es", label: "Español" },
+  { value: "fr", label: "Français" },
+  { value: "de", label: "Deutsch" },
+] as const
+
+export type TranslateTarget = (typeof TRANSLATE_OPTIONS)[number]["value"]
+
+export const translateTargetAtom = atomWithStorage<TranslateTarget>("translate-target", "off")

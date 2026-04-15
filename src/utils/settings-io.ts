@@ -18,7 +18,12 @@ const SETTINGS_KEYS = [
   "sort-by-time",
   "terminal-left-source-column",
   "terminal-right-source-column",
+  "translate-target",
 ] as const
+
+// Translation cache lives under a separate key — we clean it on reset
+// but don't export/import it (it's derived, not user-configured).
+const TRANSLATE_CACHE_KEY = "translate-cache"
 
 // Auth / non-user-preference keys that we never touch during import or
 // reset. Anything else in localStorage is considered user-owned.
@@ -151,17 +156,20 @@ export function applyImportedSettings(raw: unknown): {
 /**
  * Reset all user settings to defaults by clearing the keys we own.
  * Auth state is preserved so a logged-in user doesn't get kicked.
+ * Also nukes the derived translation cache so reset reliably puts
+ * the dashboard in a fresh-install state.
  */
 export function resetAllSettings(): void {
   for (const k of SETTINGS_KEYS) {
     localStorage.removeItem(k)
   }
+  localStorage.removeItem(TRANSLATE_CACHE_KEY)
   // Also clear anything that's not explicitly auth-owned (user may
   // have leftover keys from old versions). This is defensive: only
   // touches keys we didn't whitelist as auth.
   const allKeys = Object.keys(localStorage)
   for (const k of allKeys) {
-    if (!AUTH_KEYS.has(k) && !isSettingsKey(k)) {
+    if (!AUTH_KEYS.has(k) && !isSettingsKey(k) && k !== TRANSLATE_CACHE_KEY) {
       // Legacy keys like "metadata" (pre-refactor) or "updated"
       // (flag used by the old usePWA hook) land here.
       localStorage.removeItem(k)
