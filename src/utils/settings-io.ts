@@ -16,6 +16,9 @@ const SETTINGS_KEYS = [
   "watchlists",
   "refresh-interval",
   "sort-by-time",
+  "terminal-columns",
+  // Legacy keys kept in the allowlist so old exports still import cleanly;
+  // they're ignored on read once terminal-columns is present.
   "terminal-left-source-column",
   "terminal-right-source-column",
   "translate-target",

@@ -16,6 +16,7 @@ export const originSources = {
   "v2ex": {
     name: "V2EX",
     color: "slate",
+    lang: "zh",
     home: "https://v2ex.com/",
     sub: {
       share: {
@@ -29,6 +30,7 @@ export const originSources = {
     type: "hottest",
     column: "deprecated",
     color: "blue",
+    lang: "zh",
     home: "https://www.zhihu.com",
   },
   "weibo": {
@@ -38,6 +40,7 @@ export const originSources = {
     column: "deprecated",
     color: "red",
     interval: Time.Realtime,
+    lang: "zh",
     home: "https://weibo.com",
   },
   "zaobao": {
@@ -47,6 +50,7 @@ export const originSources = {
     column: "world",
     color: "red",
     desc: "来自第三方网站: 早晨报",
+    lang: "zh",
     home: "https://www.zaobao.com",
   },
   "coolapk": {
@@ -55,11 +59,13 @@ export const originSources = {
     column: "deprecated",
     color: "green",
     title: "今日最热",
+    lang: "zh",
     home: "https://coolapk.com",
   },
   "mktnews": {
     name: "MKTNews",
     column: "finance",
+    lang: "zh",
     home: "https://mktnews.net",
     color: "indigo",
     interval: Time.Realtime,
@@ -73,6 +79,7 @@ export const originSources = {
     name: "华尔街见闻",
     color: "blue",
     column: "finance",
+    lang: "zh",
     home: "https://wallstreetcn.com/",
     sub: {
       quick: {
@@ -95,6 +102,7 @@ export const originSources = {
     name: "36氪",
     type: "realtime",
     color: "blue",
+    lang: "zh",
     home: "https://36kr.com",
     column: "deprecated",
     sub: {
@@ -112,10 +120,12 @@ export const originSources = {
     type: "hottest",
     column: "deprecated",
     color: "gray",
+    lang: "zh",
     home: "https://www.douyin.com",
   },
   "hupu": {
     name: "虎扑",
+    lang: "zh",
     home: "https://hupu.com",
     column: "deprecated",
     title: "主干道热帖",
@@ -128,6 +138,7 @@ export const originSources = {
     column: "deprecated",
     type: "hottest",
     color: "blue",
+    lang: "zh",
     home: "https://tieba.baidu.com",
   },
   "toutiao": {
@@ -135,6 +146,7 @@ export const originSources = {
     type: "hottest",
     column: "china",
     color: "red",
+    lang: "zh",
     home: "https://www.toutiao.com",
   },
   "ithome": {
@@ -142,6 +154,7 @@ export const originSources = {
     color: "red",
     column: "tech",
     type: "realtime",
+    lang: "zh",
     home: "https://www.ithome.com",
   },
   "thepaper": {
@@ -151,12 +164,14 @@ export const originSources = {
     column: "china",
     title: "热榜",
     color: "gray",
+    lang: "zh",
     home: "https://www.thepaper.cn",
   },
   "sputniknewscn": {
     name: "卫星通讯社",
     color: "orange",
     column: "world",
+    lang: "zh",
     home: "https://sputniknews.cn",
   },
   "cankaoxiaoxi": {
@@ -164,12 +179,14 @@ export const originSources = {
     color: "red",
     column: "world",
     interval: Time.Common,
+    lang: "zh",
     home: "https://china.cankaoxiaoxi.com",
   },
   "pcbeta": {
     name: "远景论坛",
     color: "blue",
     column: "tech",
+    lang: "zh",
     home: "https://bbs.pcbeta.com",
     sub: {
       windows11: {
@@ -189,6 +206,7 @@ export const originSources = {
     name: "财联社",
     color: "red",
     column: "finance",
+    lang: "zh",
     home: "https://www.cls.cn",
     sub: {
       telegraph: {
@@ -208,6 +226,7 @@ export const originSources = {
   "xueqiu": {
     name: "雪球",
     color: "blue",
+    lang: "zh",
     home: "https://xueqiu.com",
     column: "finance",
     sub: {
@@ -225,11 +244,13 @@ export const originSources = {
     column: "finance",
     type: "realtime",
     interval: Time.Realtime,
+    lang: "zh",
     home: "https://www.gelonghui.com",
   },
   "fastbull": {
     name: "法布财经",
     color: "emerald",
+    lang: "zh",
     home: "https://www.fastbull.cn",
     column: "finance",
     sub: {
@@ -248,6 +269,7 @@ export const originSources = {
     name: "Solidot",
     color: "teal",
     column: "tech",
+    lang: "zh",
     home: "https://solidot.org",
     interval: Time.Slow,
   },
@@ -256,6 +278,7 @@ export const originSources = {
     color: "orange",
     column: "tech",
     type: "hottest",
+    lang: "en",
     home: "https://news.ycombinator.com/",
   },
   "producthunt": {
@@ -263,11 +286,13 @@ export const originSources = {
     color: "red",
     column: "deprecated",
     type: "hottest",
+    lang: "en",
     home: "https://www.producthunt.com/",
   },
   "github": {
     name: "Github",
     color: "gray",
+    lang: "en",
     home: "https://github.com/",
     column: "tech",
     sub: {
@@ -281,6 +306,7 @@ export const originSources = {
     name: "哔哩哔哩",
     color: "blue",
     column: "deprecated",
+    lang: "zh",
     home: "https://www.bilibili.com",
     sub: {
       "hot-search": {
@@ -307,6 +333,7 @@ export const originSources = {
     color: "orange",
     // cloudflare pages cannot access
     disable: "cf",
+    lang: "zh",
     home: "https://www.kuaishou.com",
   },
   "kaopu": {
@@ -315,6 +342,7 @@ export const originSources = {
     color: "gray",
     interval: Time.Common,
     desc: "不一定靠谱，多看多思考",
+    lang: "zh",
     home: "https://kaopu.news/",
   },
   "jin10": {
@@ -322,6 +350,7 @@ export const originSources = {
     column: "finance",
     color: "blue",
     type: "realtime",
+    lang: "zh",
     home: "https://www.jin10.com",
   },
   "baidu": {
@@ -329,12 +358,14 @@ export const originSources = {
     column: "china",
     color: "blue",
     type: "hottest",
+    lang: "zh",
     home: "https://www.baidu.com",
   },
   "linuxdo": {
     name: "LINUX DO",
     column: "tech",
     color: "slate",
+    lang: "zh",
     home: "https://linux.do/",
     disable: true,
     sub: {
@@ -354,6 +385,7 @@ export const originSources = {
     name: "果核剥壳",
     column: "china",
     color: "yellow",
+    lang: "zh",
     home: "https://www.ghxi.com/",
     disable: true,
   },
@@ -362,6 +394,7 @@ export const originSources = {
     column: "china",
     color: "red",
     type: "hottest",
+    lang: "zh",
     home: "https://www.smzdm.com",
     disable: true,
   },
@@ -370,6 +403,7 @@ export const originSources = {
     column: "deprecated",
     color: "blue",
     type: "hottest",
+    lang: "zh",
     home: "https://www.nowcoder.com",
   },
   "sspai": {
@@ -377,6 +411,7 @@ export const originSources = {
     column: "tech",
     color: "red",
     type: "hottest",
+    lang: "zh",
     home: "https://sspai.com",
   },
   "juejin": {
@@ -384,6 +419,7 @@ export const originSources = {
     column: "deprecated",
     color: "blue",
     type: "hottest",
+    lang: "zh",
     home: "https://juejin.cn",
   },
   "ifeng": {
@@ -392,12 +428,14 @@ export const originSources = {
     color: "red",
     type: "hottest",
     title: "热点资讯",
+    lang: "zh",
     home: "https://www.ifeng.com",
   },
   "chongbuluo": {
     name: "虫部落",
     column: "china",
     color: "green",
+    lang: "zh",
     home: "https://www.chongbuluo.com",
     sub: {
       latest: {
@@ -419,6 +457,7 @@ export const originSources = {
     title: "热门电影",
     color: "green",
     type: "hottest",
+    lang: "zh",
     home: "https://www.douban.com",
   },
   "steam": {
@@ -433,6 +472,7 @@ export const originSources = {
     name: "腾讯新闻",
     column: "china",
     color: "blue",
+    lang: "zh",
     home: "https://news.qq.com",
     sub: {
       hot: {
@@ -449,6 +489,7 @@ export const originSources = {
     title: "网络安全",
     color: "green",
     type: "hottest",
+    lang: "zh",
     home: "https://www.freebuf.com/",
   },
 
@@ -456,6 +497,7 @@ export const originSources = {
     name: "腾讯视频",
     column: "deprecated",
     color: "blue",
+    lang: "zh",
     home: "https://v.qq.com/",
     sub: {
       "tv-hotsearch": {
@@ -471,6 +513,7 @@ export const originSources = {
     name: "爱奇艺",
     column: "deprecated",
     color: "green",
+    lang: "zh",
     home: "https://www.iqiyi.com",
     sub: {
       "hot-ranklist": {
@@ -486,6 +529,7 @@ export const originSources = {
     color: "orange",
     column: "finance",
     interval: Time.Common,
+    lang: "en",
     home: "https://www.reuters.com",
     sub: {
       world: { title: "World", type: "realtime" },
@@ -498,6 +542,7 @@ export const originSources = {
     color: "red",
     column: "world",
     interval: Time.Common,
+    lang: "en",
     home: "https://apnews.com",
     sub: {
       top: { title: "Top", type: "realtime" },
@@ -510,6 +555,7 @@ export const originSources = {
     color: "green",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://www.marketwatch.com",
     sub: {
       top: { title: "Top Stories", type: "realtime" },
@@ -522,6 +568,7 @@ export const originSources = {
     color: "indigo",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://www.cnbc.com",
     sub: {
       top: { title: "Top News", type: "realtime" },
@@ -534,6 +581,7 @@ export const originSources = {
     color: "orange",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://www.bloomberg.com",
     sub: {
       markets: { title: "Markets", type: "realtime" },
@@ -546,6 +594,7 @@ export const originSources = {
     color: "amber",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://seekingalpha.com",
     sub: {
       currents: { title: "Market Currents", type: "realtime" },
@@ -557,6 +606,7 @@ export const originSources = {
     color: "rose",
     column: "finance",
     interval: Time.Common,
+    lang: "en",
     home: "https://www.ft.com",
     sub: {
       world: { title: "World", type: "realtime" },
@@ -569,6 +619,7 @@ export const originSources = {
     color: "red",
     column: "finance",
     interval: Time.Common,
+    lang: "en",
     home: "https://asia.nikkei.com",
     sub: {
       top: { title: "Top", type: "realtime" },
@@ -582,6 +633,7 @@ export const originSources = {
     column: "finance",
     interval: Time.Fast,
     type: "realtime",
+    lang: "en",
     home: "https://finance.yahoo.com",
   },
   "forexlive": {
@@ -589,6 +641,7 @@ export const originSources = {
     color: "orange",
     column: "finance",
     interval: Time.Realtime,
+    lang: "en",
     home: "https://www.forexlive.com",
     sub: {
       news: { title: "Flash", type: "realtime" },
@@ -602,6 +655,7 @@ export const originSources = {
     interval: Time.Realtime,
     type: "realtime",
     title: "News",
+    lang: "en",
     home: "https://www.fxstreet.com",
   },
   "investing": {
@@ -609,6 +663,7 @@ export const originSources = {
     color: "yellow",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://www.investing.com",
     sub: {
       economic: { title: "Economic", type: "realtime" },
@@ -621,6 +676,7 @@ export const originSources = {
     color: "blue",
     column: "finance",
     interval: Time.Fast,
+    lang: "en",
     home: "https://www.wsj.com",
     sub: {
       markets: { title: "Markets", type: "realtime" },
@@ -634,6 +690,7 @@ export const originSources = {
     interval: Time.Fast,
     type: "realtime",
     title: "Markets",
+    lang: "en",
     home: "https://www.benzinga.com",
   },
   "oilprice": {
@@ -642,6 +699,7 @@ export const originSources = {
     column: "finance",
     interval: Time.Fast,
     type: "realtime",
+    lang: "en",
     home: "https://oilprice.com",
   },
   "axios": {
@@ -650,6 +708,7 @@ export const originSources = {
     column: "world",
     interval: Time.Common,
     type: "realtime",
+    lang: "en",
     home: "https://www.axios.com",
   },
   "fedpress": {
@@ -659,6 +718,7 @@ export const originSources = {
     interval: Time.Common,
     type: "realtime",
     title: "Releases",
+    lang: "en",
     home: "https://www.federalreserve.gov",
   },
   "coindesk": {
@@ -667,6 +727,7 @@ export const originSources = {
     column: "finance",
     interval: Time.Fast,
     type: "realtime",
+    lang: "en",
     home: "https://www.coindesk.com",
   },
   "zerohedge": {
@@ -675,6 +736,7 @@ export const originSources = {
     column: "finance",
     interval: Time.Fast,
     type: "realtime",
+    lang: "en",
     home: "https://www.zerohedge.com",
   },
   "trumpstruth": {
@@ -684,6 +746,7 @@ export const originSources = {
     interval: Time.Fast,
     type: "realtime",
     title: "via trumpstruth.org",
+    lang: "en",
     home: "https://trumpstruth.org",
   },
   "clashreport": {
@@ -693,6 +756,7 @@ export const originSources = {
     interval: Time.Fast,
     type: "realtime",
     title: "via t.me",
+    lang: "en",
     home: "https://t.me/s/ClashReport",
   },
 } as const satisfies Record<string, OriginSource>
@@ -710,6 +774,7 @@ export function genSources() {
       home: source.home,
       color: source.color ?? "primary",
       interval: source.interval ?? Time.Default,
+      lang: source.lang,
     }
     if (source.sub && Object.keys(source.sub).length) {
       Object.entries(source.sub).forEach(([subId, subSource], i) => {

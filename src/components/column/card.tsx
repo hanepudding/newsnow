@@ -175,8 +175,8 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
         defer
       >
         {!!data?.items?.length && (sources[id].type === "hottest"
-          ? <NewsListHot items={data.items} />
-          : <NewsListTimeLine items={data.items} sortByTime={sortByTime} />)}
+          ? <NewsListHot items={data.items} sourceId={id} />
+          : <NewsListTimeLine items={data.items} sourceId={id} sortByTime={sortByTime} />)}
       </OverlayScrollbar>
     </>
   )
@@ -184,9 +184,9 @@ function NewsCard({ id, setHandleRef }: NewsCardProps) {
 
 function UpdatedTime({ isError, updatedTime }: { updatedTime: any, isError: boolean }) {
   const relativeTime = useRelativeTime(updatedTime ?? "")
-  if (relativeTime) return `${relativeTime}更新`
-  if (isError) return "获取失败"
-  return "加载中..."
+  if (relativeTime) return `updated ${relativeTime}`
+  if (isError) return "fetch failed"
+  return "loading..."
 }
 
 function DiffNumber({ diff }: { diff: number }) {
@@ -240,13 +240,14 @@ function NewsUpdatedTime({ date }: { date: string | number }) {
 }
 // Translate-aware title wrapper. If translation is off, returns the
 // original string. Otherwise returns the translated version (or the
-// original as fallback while loading / on error).
-function Title({ text }: { text: string }) {
-  const display = useTranslatedTitle(text)
+// original as fallback while loading / on error / source lang already
+// matches target).
+function Title({ text, sourceId }: { text: string, sourceId: SourceID }) {
+  const display = useTranslatedTitle(text, sourceId)
   return <>{display}</>
 }
 
-function NewsListHot({ items }: { items: NewsItem[] }) {
+function NewsListHot({ items, sourceId }: { items: NewsItem[], sourceId: SourceID }) {
   const { width } = useWindowSize()
   return (
     <ol className="flex flex-col gap-2">
@@ -267,7 +268,7 @@ function NewsListHot({ items }: { items: NewsItem[] }) {
           {!!item.extra?.diff && <DiffNumber diff={item.extra.diff} />}
           <span className="self-start line-height-none">
             <span className="mr-2 text-base">
-              <Title text={item.title} />
+              <Title text={item.title} sourceId={sourceId} />
             </span>
             <span className="text-xs text-neutral-400/80 truncate align-middle">
               <ExtraInfo item={item} />
@@ -286,7 +287,7 @@ function itemTimestamp(item: NewsItem): number {
   return Number.isFinite(t) ? t : 0
 }
 
-function NewsListTimeLine({ items, sortByTime }: { items: NewsItem[], sortByTime?: boolean }) {
+function NewsListTimeLine({ items, sourceId, sortByTime }: { items: NewsItem[], sourceId: SourceID, sortByTime?: boolean }) {
   const { width } = useWindowSize()
   const displayed = useMemo(() => {
     if (!sortByTime) return items
@@ -315,7 +316,7 @@ function NewsListTimeLine({ items, sortByTime }: { items: NewsItem[], sortByTime
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Title text={item.title} />
+            <Title text={item.title} sourceId={sourceId} />
           </a>
         </li>
       ))}

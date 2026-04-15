@@ -15,7 +15,7 @@ export function usePWA() {
     onNeedRefresh() {
       // Short countdown toast, then reload. 3 s is enough for the user
       // to see what's happening without being disruptive.
-      toaster("有新版本，3 秒后自动刷新", { type: "info" })
+      toaster("New version available, refreshing in 3s", { type: "info" })
       setTimeout(() => {
         // Bust any cache-busters and force a full reload. The new SW is
         // already active (skipWaiting) so the next load reads the new

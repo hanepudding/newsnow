@@ -11,16 +11,16 @@ export const columns = {
     zh: "Terminal",
   },
   china: {
-    zh: "国内",
+    zh: "China",
   },
   world: {
-    zh: "国际",
+    zh: "World",
   },
   finance: {
-    zh: "财经",
+    zh: "Finance",
   },
   tech: {
-    zh: "科技",
+    zh: "Tech",
   },
   deprecated: {
     zh: "deprecated",

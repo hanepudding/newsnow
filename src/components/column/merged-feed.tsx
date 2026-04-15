@@ -1,21 +1,21 @@
-// The "terminal" view: a two-column dashboard where each column is a
-// time-sorted timeline merged from whatever watchlist the user picks at
-// runtime. Each column has its own independent watchlist-id atom so
-// you can run e.g. Finance Bro next to Press at the same time.
+// The "terminal" view: an N-column dashboard where each column is a
+// time-sorted timeline merged from whatever watchlist the user picks
+// at runtime. Column count is 1..6 and user-adjustable; each column
+// has its own independent watchlist-id slot in terminalColumnsAtom.
 //
 // Each MergedFeedColumn reuses the /api/s?id=... endpoint (and its
 // server-side cache) via useQueries, so if the source watchlist tab is
 // visited the same queries back both views.
 
-import type { PrimitiveAtom } from "jotai"
 import type { NewsItem, SourceID, SourceResponse } from "@shared/types"
 import { useQueries } from "@tanstack/react-query"
 import { useWindowSize } from "react-use"
 import { OverlayScrollbar } from "../common/overlay-scrollbar"
 import {
+  MAX_TERMINAL_COLUMNS,
+  MIN_TERMINAL_COLUMNS,
   refreshIntervalAtom,
-  terminalLeftSourceColumnAtom,
-  terminalRightSourceColumnAtom,
+  terminalColumnsAtom,
 } from "~/hooks/useSettings"
 import { useTranslatedTitle } from "~/hooks/useTranslate"
 import { watchlistsAtom } from "~/atoms"
@@ -40,7 +40,7 @@ function MergedItemRow({ item }: { item: MergedItem }) {
   const source = sources[item.__source]
   const baseId = item.__source.split("-")[0]
   const relative = useRelativeTimeFromTs(itemTimestamp(item))
-  const displayTitle = useTranslatedTitle(item.title)
+  const displayTitle = useTranslatedTitle(item.title, item.__source)
 
   return (
     <li className="flex flex-col gap-0.5 border-s border-neutral-400/30 pl-3 ml-1 pb-2 relative">
@@ -76,10 +76,12 @@ function MergedItemRow({ item }: { item: MergedItem }) {
   )
 }
 
-function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> }) {
+function MergedFeedColumn({ columnIndex }: { columnIndex: number }) {
   const refreshInterval = useAtomValue(refreshIntervalAtom)
-  const [sourceColumn, setSourceColumn] = useAtom(sourceAtom)
+  const [columns, setColumns] = useAtom(terminalColumnsAtom)
   const watchlists = useAtomValue(watchlistsAtom)
+
+  const sourceColumn = columns[columnIndex]
 
   // Resolve the selected watchlist. If the stored id no longer exists
   // (user deleted the watchlist), fall back to the first available one.
@@ -92,6 +94,17 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
   const sourceIds = effective?.sources ?? []
   const effectiveId = effective?.id ?? ""
   const effectiveName = effective?.name ?? "—"
+
+  const setSourceColumn = useCallback(
+    (id: string) => {
+      setColumns((prev) => {
+        const next = [...prev]
+        next[columnIndex] = id
+        return next
+      })
+    },
+    [columnIndex, setColumns],
+  )
 
   const queries = useQueries({
     queries: sourceIds.map(id => ({
@@ -128,9 +141,9 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
   }, [queries.map(q => q.dataUpdatedAt).join(","), sourceIds.join(",")])
 
   return (
-    <div className="bg-base bg-op-70! backdrop-blur-md rounded-2xl p-4 md:p-5 h-full flex flex-col">
+    <div className="bg-base bg-op-70! backdrop-blur-md rounded-2xl p-4 md:p-5 h-full flex flex-col min-w-0">
       <div className="flex items-center justify-between mb-3 px-1 flex-wrap gap-2">
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
           <span className="i-ph:terminal-window-duotone text-xl op-70" />
           <span className="text-lg font-bold">Terminal</span>
           <span className="flex items-center gap-1 text-xs op-70">
@@ -141,7 +154,7 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
                 <span className="i-ph:caret-down ml-0.5 text-[10px] align-middle" />
               </span>
               <select
-                title="切换聚合来源"
+                title="Switch watchlist"
                 value={effectiveId}
                 onChange={e => setSourceColumn(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full"
@@ -172,12 +185,12 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
               <p className="mb-2">
                 {effectiveName}
                 {" "}
-                是空的
+                is empty
               </p>
               <p className="text-xs op-70">
                 {watchlists.length === 0
-                  ? "你目前没有任何 watchlist。通过右上角的 ··· 菜单管理 watchlists。"
-                  : "切换到另一个 watchlist，或者在那个 tab 里加点源。"}
+                  ? "No watchlists. Use the · · · menu to create one."
+                  : "Switch to another watchlist or add sources to this one."}
               </p>
             </div>
           )
@@ -201,14 +214,86 @@ function MergedFeedColumn({ sourceAtom }: { sourceAtom: PrimitiveAtom<string> })
   )
 }
 
-export function MergedFeed() {
+// Column count +/- controls, shown in the Terminal view header.
+function TerminalColumnControls() {
+  const [columns, setColumns] = useAtom(terminalColumnsAtom)
+  const watchlists = useAtomValue(watchlistsAtom)
+
+  const addColumn = useCallback(() => {
+    if (columns.length >= MAX_TERMINAL_COLUMNS) return
+    // New column defaults to the watchlist right after the last current
+    // pick (cycling), so you get variety when stacking multiple columns.
+    const last = columns[columns.length - 1]
+    const lastIdx = watchlists.findIndex(w => w.id === last)
+    const next = watchlists[(lastIdx + 1) % watchlists.length]?.id ?? watchlists[0]?.id ?? last
+    setColumns([...columns, next])
+  }, [columns, watchlists, setColumns])
+
+  const removeColumn = useCallback(() => {
+    if (columns.length <= MIN_TERMINAL_COLUMNS) return
+    setColumns(columns.slice(0, -1))
+  }, [columns, setColumns])
+
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto w-full"
-      style={{ height: "calc(100vh - 180px)" }}
-    >
-      <MergedFeedColumn sourceAtom={terminalLeftSourceColumnAtom} />
-      <MergedFeedColumn sourceAtom={terminalRightSourceColumnAtom} />
+    <div className="max-w-7xl mx-auto w-full mb-3 flex items-center justify-end gap-2 text-xs op-70">
+      <span className="op-60">Columns:</span>
+      <button
+        type="button"
+        disabled={columns.length <= MIN_TERMINAL_COLUMNS}
+        onClick={removeColumn}
+        title="Remove column"
+        className={$(
+          "btn i-ph:minus-circle-duotone text-base",
+          columns.length <= MIN_TERMINAL_COLUMNS ? "op-20 cursor-not-allowed" : "cursor-pointer hover:op-100",
+        )}
+      />
+      <span className="tabular-nums font-mono min-w-4 text-center">{columns.length}</span>
+      <button
+        type="button"
+        disabled={columns.length >= MAX_TERMINAL_COLUMNS}
+        onClick={addColumn}
+        title="Add column"
+        className={$(
+          "btn i-ph:plus-circle-duotone text-base",
+          columns.length >= MAX_TERMINAL_COLUMNS ? "op-20 cursor-not-allowed" : "cursor-pointer hover:op-100",
+        )}
+      />
     </div>
+  )
+}
+
+export function MergedFeed() {
+  const columns = useAtomValue(terminalColumnsAtom)
+
+  // Responsive grid: single-column on mobile, the user's chosen N on md+.
+  const gridStyle = useMemo<React.CSSProperties>(() => {
+    // On mobile we always stack; desktop uses the column count.
+    return {
+      gridTemplateColumns: `repeat(${Math.max(1, columns.length)}, minmax(0, 1fr))`,
+      height: "calc(100vh - 220px)",
+    }
+  }, [columns.length])
+
+  return (
+    <>
+      <TerminalColumnControls />
+      <div
+        className="hidden md:grid max-w-7xl mx-auto w-full gap-6"
+        style={gridStyle}
+      >
+        {columns.map((_, i) => (
+          <MergedFeedColumn key={i} columnIndex={i} />
+        ))}
+      </div>
+      <div
+        className="grid md:hidden grid-cols-1 max-w-7xl mx-auto w-full gap-6"
+        style={{ height: "calc(100vh - 220px)" }}
+      >
+        {/* Mobile: always stack, render all columns in order */}
+        {columns.map((_, i) => (
+          <MergedFeedColumn key={i} columnIndex={i} />
+        ))}
+      </div>
+    </>
   )
 }

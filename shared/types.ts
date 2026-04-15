@@ -77,6 +77,16 @@ export interface Source {
    */
   disable?: boolean | "cf"
   redirect?: SourceID
+  /**
+   * ISO-639 language code the source's headlines are published in.
+   * Used by the translation layer to skip round-trips when the source
+   * language already matches the user's target language.
+   *   "en" — English publishers (Reuters, WSJ, Bloomberg, FT, etc.)
+   *   "zh" — Chinese publishers (jin10, wallstreetcn, cls, etc.)
+   *   "ja" — Japanese, "ru" — Russian, etc.
+   * Leave undefined if mixed or unknown.
+   */
+  lang?: string
 }
 
 export interface Column {

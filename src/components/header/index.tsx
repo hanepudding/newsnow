@@ -45,14 +45,14 @@ function RefreshCluster() {
     <span className="flex items-center gap-1">
       <button
         type="button"
-        title="立即刷新"
+        title="Refresh now"
         className={$("i-ph:arrow-counter-clockwise-duotone btn", isFetching && "animate-spin i-ph:circle-dashed-duotone")}
         onClick={refreshAll}
       />
       <span className="relative text-xs font-mono op-70 hover:op-100 transition-opacity">
         <span className={$("tabular-nums", interval === 0 && "op-50")}>{currentLabel}</span>
         <select
-          title="自动刷新间隔"
+          title="Auto-refresh interval"
           value={interval}
           onChange={e => setInterval(Number(e.target.value))}
           className="absolute inset-0 opacity-0 cursor-pointer w-full"
@@ -71,7 +71,7 @@ function SortByTime() {
   return (
     <button
       type="button"
-      title={sortByTime ? "按时间排序" : "默认顺序"}
+      title={sortByTime ? "Sort by time" : "Default order"}
       className={$(
         "btn",
         sortByTime ? "i-ph:clock-countdown-duotone" : "i-ph:list-bullets-duotone",
@@ -94,13 +94,13 @@ function TranslateSelector() {
           "btn i-ph:translate-duotone",
           target === "off" && "op-40",
         )}
-        title={target === "off" ? "翻译: 关闭" : `翻译到 ${current.label}`}
+        title={target === "off" ? "Translation: off" : `Translate to ${current.label}`}
       />
       {target !== "off" && (
         <span className="text-xs font-mono op-70 -ml-0.5 pointer-events-none">{current.label}</span>
       )}
       <select
-        title="翻译语言"
+        title="Translation target"
         value={target}
         onChange={e => setTarget(e.target.value as any)}
         className="absolute inset-0 opacity-0 cursor-pointer w-full"

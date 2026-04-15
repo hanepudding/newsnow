@@ -22,7 +22,7 @@ export function NavBar() {
           "cursor-pointer transition-all",
         )}
       >
-        更多
+        More
       </button>
       {watchlists.map(w => (
         <Link

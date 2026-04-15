@@ -36,7 +36,7 @@ export function StarPopover({ id, color }: { id: SourceID, color?: string }) {
     <span ref={ref} className="relative inline-block">
       <button
         type="button"
-        title={isInAny ? "已加入 watchlist" : "加入 watchlist"}
+        title={isInAny ? "In one or more watchlists" : "Add to a watchlist"}
         className={$(
           "btn",
           isInAny ? "i-ph:star-fill" : "i-ph:star-duotone",
@@ -57,11 +57,11 @@ export function StarPopover({ id, color }: { id: SourceID, color?: string }) {
           onClick={e => e.stopPropagation()}
         >
           <div className="px-3 py-2 text-xs op-60 border-b border-neutral-400/15">
-            加入 watchlist
+            Add to watchlist
           </div>
           {entries.length === 0
             ? (
-                <div className="px-3 py-2 text-xs op-50">没有 watchlist</div>
+                <div className="px-3 py-2 text-xs op-50">No watchlists</div>
               )
             : (
                 <ul className="py-1">

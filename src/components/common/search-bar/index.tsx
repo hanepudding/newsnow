@@ -26,14 +26,14 @@ function groupByColumn(items: SourceItemProps[]) {
     column: string
     sources: SourceItemProps[]
   }[]).sort((m, n) => {
-    if (m.column === "科技") return -1
-    if (n.column === "科技") return 1
+    if (m.column === "Tech") return -1
+    if (n.column === "Tech") return 1
 
     // Always park these at the very end, in this order.
     if (m.column === "deprecated") return 1
     if (n.column === "deprecated") return -1
-    if (m.column === "未分类") return 1
-    if (n.column === "未分类") return -1
+    if (m.column === "Uncategorized") return 1
+    if (n.column === "Uncategorized") return -1
 
     return m.column < n.column ? -1 : 1
   })
@@ -48,7 +48,7 @@ export function SearchBar() {
         .map(([k, source]) => ({
           id: k,
           title: source.title,
-          column: source.column ? columns[source.column].zh : "未分类",
+          column: source.column ? columns[source.column].zh : "Uncategorized",
           name: source.name,
           pinyin: pinyin?.[k as keyof typeof pinyin] ?? "",
         })))
@@ -86,12 +86,12 @@ export function SearchBar() {
       <Command.Input
         ref={inputRef}
         autoFocus
-        placeholder="搜索你想要的"
+        placeholder="Search sources..."
       />
       <div className="md:flex pt-2">
         <OverlayScrollbar defer className="overflow-y-auto md:min-w-275px">
           <Command.List>
-            <Command.Empty> 没有找到，可以前往 Github 提 issue </Command.Empty>
+            <Command.Empty> No sources found. Open an issue on GitHub if you want one added. </Command.Empty>
             {
               sourceItems.map(({ column, sources }) => (
                 <Command.Group heading={column} key={column}>
@@ -124,29 +124,87 @@ export function SearchBar() {
 function SourceItem({ item }: {
   item: SourceItemProps
 }) {
-  // Quick add/remove toggles membership in the FIRST watchlist (Press
-  // by default). For multi-list membership, the user can star from
-  // the card preview on the right instead, which uses the full popover.
   const { entries, isInAny, toggleInList } = useWatchlistMembership(item.id)
-  const primary = entries[0]
+  const [picker, setPicker] = useState(false)
+  const rowRef = useRef<HTMLDivElement | null>(null)
+
+  // Close picker on outside click / Escape
+  useEffect(() => {
+    if (!picker) return
+    const onDoc = (e: MouseEvent) => {
+      if (!rowRef.current?.contains(e.target as Node)) setPicker(false)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPicker(false)
+    }
+    document.addEventListener("mousedown", onDoc)
+    document.addEventListener("keydown", onKey)
+    return () => {
+      document.removeEventListener("mousedown", onDoc)
+      document.removeEventListener("keydown", onKey)
+    }
+  }, [picker])
+
   return (
-    <Command.Item
-      keywords={[item.name, item.title ?? "", item.pinyin]}
-      value={item.id}
-      className="flex justify-between items-center p-2"
-      onSelect={() => primary && toggleInList(primary.id)}
-    >
-      <span className="flex gap-2 items-center">
-        <span
-          className={$("w-4 h-4 rounded-md bg-cover")}
-          style={{
-            backgroundImage: `url(/icons/${item.id.split("-")[0]}.png)`,
-          }}
-        />
-        <span>{item.name}</span>
-        <span className="text-xs text-neutral-400/80 self-end mb-3px">{item.title}</span>
-      </span>
-      <span className={$(isInAny ? "i-ph-star-fill" : "i-ph-star-duotone", "bg-primary op-40")}></span>
-    </Command.Item>
+    <div ref={rowRef} className="relative">
+      <Command.Item
+        keywords={[item.name, item.title ?? "", item.pinyin]}
+        value={item.id}
+        className="flex justify-between items-center p-2"
+        onSelect={() => setPicker(v => !v)}
+      >
+        <span className="flex gap-2 items-center">
+          <span
+            className={$("w-4 h-4 rounded-md bg-cover")}
+            style={{
+              backgroundImage: `url(/icons/${item.id.split("-")[0]}.png)`,
+            }}
+          />
+          <span>{item.name}</span>
+          <span className="text-xs text-neutral-400/80 self-end mb-3px">{item.title}</span>
+        </span>
+        <span className={$(isInAny ? "i-ph-star-fill" : "i-ph-star-duotone", "bg-primary op-40")}></span>
+      </Command.Item>
+      {picker && (
+        <div
+          className={$(
+            "absolute right-2 top-full mt-1 z-100 min-w-44",
+            "bg-base bg-op-95 backdrop-blur-md rounded-lg shadow-xl",
+            "border border-neutral-400/20",
+          )}
+          onClick={e => e.stopPropagation()}
+          onMouseDown={e => e.stopPropagation()}
+        >
+          <div className="px-3 py-2 text-xs op-60 border-b border-neutral-400/15">
+            Add to watchlist
+          </div>
+          {entries.length === 0
+            ? (
+                <div className="px-3 py-2 text-xs op-50">No watchlists</div>
+              )
+            : (
+                <ul className="py-1">
+                  {entries.map(e => (
+                    <li key={e.id}>
+                      <button
+                        type="button"
+                        onClick={() => toggleInList(e.id)}
+                        className="w-full flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-neutral-400/10 transition-colors"
+                      >
+                        <span
+                          className={$(
+                            "inline-block w-3.5 h-3.5 flex-shrink-0",
+                            e.included ? "i-ph:check-square-fill color-primary" : "i-ph:square-duotone op-60",
+                          )}
+                        />
+                        <span className="truncate text-left flex-1">{e.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+        </div>
+      )}
+    </div>
   )
 }

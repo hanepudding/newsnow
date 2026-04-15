@@ -59,7 +59,7 @@ export function ManageWatchlistsModal() {
 
         <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
           {watchlists.length === 0 && (
-            <p className="text-center op-60 py-6">还没有 watchlist</p>
+            <p className="text-center op-60 py-6">No watchlists yet</p>
           )}
           {watchlists.map((w, i) => (
             <WatchlistRow

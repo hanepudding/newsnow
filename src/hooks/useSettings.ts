@@ -24,9 +24,19 @@ export const REFRESH_INTERVAL_OPTIONS = [
 export const refreshIntervalAtom = atomWithStorage<number>("refresh-interval", 15_000)
 export const sortByTimeAtom = atomWithStorage<boolean>("sort-by-time", false)
 
-// Which watchlists the two Terminal columns aggregate from. Any
-// watchlist id is valid. Defaults: left = finance-bro, right = press.
-// Each column remembers its own selection independently.
+// Terminal columns: each entry is a watchlist id that a column
+// aggregates from. Array length is also the column count. Users can
+// +/- columns via buttons in the Terminal header; we cap at 1..6.
+// Default: 2 columns [finance-bro, press].
+export const MIN_TERMINAL_COLUMNS = 1
+export const MAX_TERMINAL_COLUMNS = 6
+export const terminalColumnsAtom = atomWithStorage<string[]>(
+  "terminal-columns",
+  ["finance-bro", "press"],
+)
+
+// Legacy atoms kept for one release to allow migration on first load.
+// Will be removed after most users upgrade past this commit.
 export const terminalLeftSourceColumnAtom = atomWithStorage<string>("terminal-left-source-column", "finance-bro")
 export const terminalRightSourceColumnAtom = atomWithStorage<string>("terminal-right-source-column", "press")
 

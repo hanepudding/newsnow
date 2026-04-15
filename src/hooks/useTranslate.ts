@@ -165,17 +165,35 @@ async function translate(text: string, target: string): Promise<string> {
   return promise
 }
 
+// ISO 639-1 base-language comparison. "zh-CN" and "zh-TW" are both "zh"
+// for our purposes — if a Chinese source is already zh, it doesn't need
+// translation regardless of the user's specific Chinese variant.
+function sameLang(a: string | undefined, b: string | undefined): boolean {
+  if (!a || !b) return false
+  const norm = (s: string) => s.toLowerCase().split(/[-_]/)[0]
+  return norm(a) === norm(b)
+}
+
 /**
  * Returns the translated version of `text` for the current target
  * language, or the original text if translation is disabled / still
- * loading / failed. Re-renders when the translation arrives.
+ * loading / failed / source language already matches target.
+ * Re-renders when the translation arrives.
+ *
+ * Pass `sourceId` so the hook can look up the source's declared
+ * `lang` field and skip the round trip when it matches. If sourceId
+ * is omitted (or the source has no lang), we always translate.
  */
-export function useTranslatedTitle(text: string): string {
+export function useTranslatedTitle(text: string, sourceId?: string): string {
   const target = useAtomValue(translateTargetAtom)
   const [translated, setTranslated] = useState<string>("")
 
+  // Resolve source language synchronously from the sources registry.
+  const sourceLang = sourceId ? (sources as Record<string, { lang?: string } | undefined>)[sourceId]?.lang : undefined
+  const skip = target === "off" || !text || sameLang(sourceLang, target)
+
   useEffect(() => {
-    if (target === "off" || !text) {
+    if (skip) {
       setTranslated("")
       return
     }
@@ -186,9 +204,9 @@ export function useTranslatedTitle(text: string): string {
     return () => {
       cancelled = true
     }
-  }, [text, target])
+  }, [text, target, skip])
 
-  // Falls back to the original if translation empty (off / failed / pending)
+  // Falls back to the original if translation empty (off / failed / pending / skipped)
   return translated || text
 }
 
