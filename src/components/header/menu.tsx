@@ -128,12 +128,6 @@ export function Menu() {
                 <span>Reset all data</span>
               </li>
 
-              <li className="my-1 h-px bg-neutral-400/20" role="separator" />
-
-              <li onClick={() => window.open(Homepage)} className="cursor-pointer [&_*]:cursor-pointer transition-all">
-                <span className="i-ph:github-logo-duotone inline-block" />
-                <span>Star on Github </span>
-              </li>
             </ol>
           </motion.div>
         </div>
