@@ -1124,7 +1124,6 @@
     "lang": "en"
   },
   "trumpstruth": {
-    "title": "via trumpstruth.org",
     "name": "Trump Truth",
     "type": "realtime",
     "column": "world",
@@ -1134,7 +1133,6 @@
     "lang": "en"
   },
   "clashreport": {
-    "title": "via t.me",
     "name": "Clash Report",
     "type": "realtime",
     "column": "world",
