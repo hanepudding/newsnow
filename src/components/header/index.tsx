@@ -127,7 +127,7 @@ export function Header() {
             </p>
           </span>
         </Link>
-        <a target="_blank" href={`${Homepage}/releases/tag/v${Version}`} className="btn text-sm ml-1 font-mono">
+        <a target="_blank" href={Homepage} className="btn text-sm ml-1 font-mono">
           {`v${Version}`}
         </a>
       </span>

@@ -3,6 +3,7 @@
 // any number of watchlists simultaneously.
 
 import type { SourceID } from "@shared/types"
+import { DEFAULT_STAR_WATCHLIST_ID } from "@shared/watchlists"
 import { toggleSourceInWatchlistAtom, watchlistsAtom, watchlistsContaining } from "~/atoms"
 
 export interface WatchlistMembershipEntry {
@@ -45,16 +46,16 @@ export function useWatchlistMembership(sourceId: SourceID) {
 /**
  * Legacy name kept so any remaining callers don't break. Prefer
  * `useWatchlistMembership`. Returns just `isFocused` + `toggleFocus`
- * semantics backed by the FIRST watchlist (the user's primary
- * list — Press by default).
+ * semantics backed by the DEFAULT_STAR_WATCHLIST_ID watchlist (or
+ * the first one if that id doesn't exist).
  */
 export function useFocusWith(id: SourceID) {
   const { entries, toggleInList } = useWatchlistMembership(id)
-  const first = entries[0]
-  const isFocused = first?.included ?? false
+  const target = entries.find(e => e.id === DEFAULT_STAR_WATCHLIST_ID) ?? entries[0]
+  const isFocused = target?.included ?? false
   const toggleFocus = useCallback(() => {
-    if (first) toggleInList(first.id)
-  }, [first, toggleInList])
+    if (target) toggleInList(target.id)
+  }, [target, toggleInList])
 
   return { toggleFocus, isFocused }
 }

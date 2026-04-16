@@ -27,18 +27,18 @@ export const sortByTimeAtom = atomWithStorage<boolean>("sort-by-time", false)
 // Terminal columns: each entry is a watchlist id that a column
 // aggregates from. Array length is also the column count. Users can
 // +/- columns via buttons in the Terminal header; we cap at 1..6.
-// Default: 2 columns [finance-bro, press].
+// Default: 2 columns [press, cn-flash].
 export const MIN_TERMINAL_COLUMNS = 1
 export const MAX_TERMINAL_COLUMNS = 6
 export const terminalColumnsAtom = atomWithStorage<string[]>(
   "terminal-columns",
-  ["finance-bro", "press"],
+  ["press", "cn-flash"],
 )
 
 // Legacy atoms kept for one release to allow migration on first load.
 // Will be removed after most users upgrade past this commit.
-export const terminalLeftSourceColumnAtom = atomWithStorage<string>("terminal-left-source-column", "finance-bro")
-export const terminalRightSourceColumnAtom = atomWithStorage<string>("terminal-right-source-column", "press")
+export const terminalLeftSourceColumnAtom = atomWithStorage<string>("terminal-left-source-column", "press")
+export const terminalRightSourceColumnAtom = atomWithStorage<string>("terminal-right-source-column", "clash-news")
 
 // ---------------------------------------------------------------------
 // Translation

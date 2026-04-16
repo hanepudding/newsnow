@@ -23,61 +23,61 @@ export interface Watchlist {
   sources: SourceID[]
 }
 
-// Source presets used to seed the 3 default watchlists on fresh
-// installs. These are CONSTANTS, not live metadata — after first load
-// the user owns the lists and edits persist to localStorage.
+// ---------------------------------------------------------------------------
+// Default source lists — all hardcoded, no filter/derive magic.
+// ---------------------------------------------------------------------------
 
-const FINANCE_BRO_SOURCES = [
-  // Primary ticker flash
+// "Press" — the primary English-language finance press ticker.
+const PRESS_SOURCES: SourceID[] = [
   "forexlive-news",
-  "jin10",
-  "wallstreetcn-news",
-  "cls-telegraph",
-  // Markets
   "wsj-markets",
   "bloomberg-markets",
   "ft-markets",
   "reuters-business",
   "cnbc-top",
-  // World / macro
   "wsj-world",
   "ft-world",
   "bloomberg-politics",
   "reuters-world",
   "cnbc-world",
-  // Editorial / opinion
   "zerohedge",
   "axios",
-] as const satisfies readonly SourceID[]
+]
 
-// "Press" is the English-language subset of Finance Bro — same publishers
-// minus the three Chinese flash sources (jin10, wallstreetcn-news,
-// cls-telegraph). Originally this was the "focus" column.
-const CHINESE_SOURCE_IDS = new Set<SourceID>([
+// "CN Flash" — Chinese-language finance flash sources.
+const CN_FLASH_SOURCES: SourceID[] = [
   "jin10",
   "wallstreetcn-news",
   "cls-telegraph",
-])
-const PRESS_SOURCES = FINANCE_BRO_SOURCES.filter(
-  id => !CHINESE_SOURCE_IDS.has(id as SourceID),
-) as SourceID[]
+]
 
-const TRENDING_SOURCES = [
+// "Trending" — ranking / most-read lists.
+const TRENDING_SOURCES: SourceID[] = [
   "wallstreetcn-hot",
   "cls-hot",
-] as const satisfies readonly SourceID[]
+]
 
-const CLASH_NEWS_SOURCES = [
+// "Clash News" — conflict monitoring / OSINT.
+const CLASH_NEWS_SOURCES: SourceID[] = [
   "clashreport",
   "trumpstruth",
-] as const satisfies readonly SourceID[]
+]
+
+// ---------------------------------------------------------------------------
+// Default watchlists. Tab order in the navbar follows array order here.
+// ---------------------------------------------------------------------------
 
 export const DEFAULT_WATCHLISTS: Watchlist[] = [
-  { id: "press", name: "Press", sources: [...PRESS_SOURCES] },
-  { id: "finance-bro", name: "Finance Bro", sources: [...FINANCE_BRO_SOURCES] },
-  { id: "trending", name: "Trending", sources: [...TRENDING_SOURCES] },
-  { id: "clash-news", name: "Clash News", sources: [...CLASH_NEWS_SOURCES] },
+  { id: "press", name: "Press", sources: PRESS_SOURCES },
+  { id: "cn-flash", name: "CN Flash", sources: CN_FLASH_SOURCES },
+  { id: "trending", name: "Trending", sources: TRENDING_SOURCES },
+  { id: "clash-news", name: "Clash News", sources: CLASH_NEWS_SOURCES },
 ]
+
+// The watchlist id that the search-bar quick-star and the "first
+// watchlist" fallback logic should target. Defaults to "clash-news"
+// so that starring a source from the 更多 dialog adds it there.
+export const DEFAULT_STAR_WATCHLIST_ID = "clash-news"
 
 /**
  * Generate a fresh watchlist id that doesn't collide with any of the
