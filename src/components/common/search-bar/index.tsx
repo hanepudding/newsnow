@@ -5,6 +5,7 @@ import { useMemo, useRef, useState } from "react"
 import pinyin from "@shared/pinyin.json"
 import { OverlayScrollbar } from "../overlay-scrollbar"
 import { CardWrapper } from "~/components/column/card"
+import { canCreateWatchlistAtom, createWatchlistAtom } from "~/atoms"
 
 import "./cmdk.css"
 
@@ -125,6 +126,8 @@ function SourceItem({ item }: {
   item: SourceItemProps
 }) {
   const { entries, isInAny, toggleInList } = useWatchlistMembership(item.id)
+  const canCreate = useAtomValue(canCreateWatchlistAtom)
+  const create = useSetAtom(createWatchlistAtom)
   const [picker, setPicker] = useState(false)
   const rowRef = useRef<HTMLDivElement | null>(null)
 
@@ -203,6 +206,16 @@ function SourceItem({ item }: {
                   ))}
                 </ul>
               )}
+          {canCreate && (
+            <button
+              type="button"
+              onClick={() => create({ sources: [item.id] })}
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs op-60 hover:op-100 hover:bg-neutral-400/10 transition-colors border-t border-neutral-400/15"
+            >
+              <span className="i-ph:plus-bold inline-block w-3.5 h-3.5 flex-shrink-0" />
+              <span>New watchlist</span>
+            </button>
+          )}
         </div>
       )}
     </div>

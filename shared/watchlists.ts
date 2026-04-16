@@ -67,10 +67,16 @@ const TRENDING_SOURCES = [
   "cls-hot",
 ] as const satisfies readonly SourceID[]
 
+const CLASH_NEWS_SOURCES = [
+  "clashreport",
+  "trumpstruth",
+] as const satisfies readonly SourceID[]
+
 export const DEFAULT_WATCHLISTS: Watchlist[] = [
   { id: "press", name: "Press", sources: [...PRESS_SOURCES] },
   { id: "finance-bro", name: "Finance Bro", sources: [...FINANCE_BRO_SOURCES] },
   { id: "trending", name: "Trending", sources: [...TRENDING_SOURCES] },
+  { id: "clash-news", name: "Clash News", sources: [...CLASH_NEWS_SOURCES] },
 ]
 
 /**

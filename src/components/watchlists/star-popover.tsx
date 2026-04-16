@@ -7,11 +7,15 @@
 // live in the card header without needing a full modal.
 
 import type { SourceID } from "@shared/types"
+import { MAX_WATCHLISTS } from "@shared/watchlists"
 import { useEffect, useRef, useState } from "react"
 import { useWatchlistMembership } from "~/hooks/useFocus"
+import { canCreateWatchlistAtom, createWatchlistAtom } from "~/atoms"
 
 export function StarPopover({ id, color }: { id: SourceID, color?: string }) {
   const { entries, isInAny, toggleInList } = useWatchlistMembership(id)
+  const canCreate = useAtomValue(canCreateWatchlistAtom)
+  const create = useSetAtom(createWatchlistAtom)
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -84,6 +88,22 @@ export function StarPopover({ id, color }: { id: SourceID, color?: string }) {
                   ))}
                 </ul>
               )}
+          {canCreate && (
+            <button
+              type="button"
+              onClick={() => {
+                const newId = create({ sources: [id] })
+                if (newId) {
+                  // The new watchlist is already created WITH this source in it.
+                  // No further toggle needed.
+                }
+              }}
+              className="w-full flex items-center gap-2 px-3 py-1.5 text-xs op-60 hover:op-100 hover:bg-neutral-400/10 transition-colors border-t border-neutral-400/15"
+            >
+              <span className="i-ph:plus-bold inline-block w-3.5 h-3.5 flex-shrink-0" />
+              <span>New watchlist</span>
+            </button>
+          )}
         </div>
       )}
     </span>

@@ -83,17 +83,30 @@ function MergedFeedColumn({ columnIndex }: { columnIndex: number }) {
 
   const sourceColumn = columns[columnIndex]
 
-  // Resolve the selected watchlist. If the stored id no longer exists
-  // (user deleted the watchlist), fall back to the first available one.
-  const effective = useMemo(() => {
-    const match = watchlists.find(w => w.id === sourceColumn)
-    if (match) return match
-    return watchlists[0]
+  // Resolve the selection: either a watchlist (id matches a watchlist)
+  // or a single source (id matches a source registry entry like
+  // "reuters-world"). Watchlists take priority.
+  const resolved = useMemo(() => {
+    // Try watchlist first
+    const wl = watchlists.find(w => w.id === sourceColumn)
+    if (wl) return { type: "watchlist" as const, id: wl.id, name: wl.name, sourceIds: wl.sources }
+
+    // Try single source
+    if (sourceColumn && sources[sourceColumn as SourceID] && !sources[sourceColumn as SourceID].redirect) {
+      const s = sources[sourceColumn as SourceID]
+      return { type: "source" as const, id: sourceColumn, name: `${s.name}${s.title ? ` ${s.title}` : ""}`, sourceIds: [sourceColumn as SourceID] }
+    }
+
+    // Fallback: first watchlist
+    const first = watchlists[0]
+    if (first) return { type: "watchlist" as const, id: first.id, name: first.name, sourceIds: first.sources }
+
+    return { type: "watchlist" as const, id: "", name: "—", sourceIds: [] as SourceID[] }
   }, [watchlists, sourceColumn])
 
-  const sourceIds = effective?.sources ?? []
-  const effectiveId = effective?.id ?? ""
-  const effectiveName = effective?.name ?? "—"
+  const sourceIds = resolved.sourceIds
+  const effectiveId = resolved.id
+  const effectiveName = resolved.name
 
   const setSourceColumn = useCallback(
     (id: string) => {
@@ -154,16 +167,32 @@ function MergedFeedColumn({ columnIndex }: { columnIndex: number }) {
                 <span className="i-ph:caret-down ml-0.5 text-[10px] align-middle" />
               </span>
               <select
-                title="Switch watchlist"
+                title="Switch source"
                 value={effectiveId}
                 onChange={e => setSourceColumn(e.target.value)}
                 className="absolute inset-0 opacity-0 cursor-pointer w-full"
               >
-                {watchlists.map(w => (
-                  <option key={w.id} value={w.id}>
-                    {w.name}
-                  </option>
-                ))}
+                <optgroup label="Watchlists">
+                  {watchlists.map(w => (
+                    <option key={w.id} value={w.id}>
+                      {w.name}
+                      {" "}
+                      (
+                      {w.sources.length}
+                      )
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Single source">
+                  {typeSafeObjectEntries(sources)
+                    .filter(([, s]) => !s.redirect && !s.disable)
+                    .map(([id, s]) => (
+                      <option key={id} value={id}>
+                        {s.name}
+                        {s.title ? ` ${s.title}` : ""}
+                      </option>
+                    ))}
+                </optgroup>
               </select>
             </span>
           </span>
@@ -235,7 +264,7 @@ function TerminalColumnControls() {
   }, [columns, setColumns])
 
   return (
-    <div className="max-w-7xl mx-auto w-full mb-3 flex items-center justify-end gap-2 text-xs op-70">
+    <div className="w-full mb-3 flex items-center justify-end gap-2 text-xs op-70">
       <span className="op-60">Columns:</span>
       <button
         type="button"
@@ -278,7 +307,7 @@ export function MergedFeed() {
     <>
       <TerminalColumnControls />
       <div
-        className="hidden md:grid max-w-7xl mx-auto w-full gap-6"
+        className="hidden md:grid w-full gap-6"
         style={gridStyle}
       >
         {columns.map((_, i) => (
@@ -286,7 +315,7 @@ export function MergedFeed() {
         ))}
       </div>
       <div
-        className="grid md:hidden grid-cols-1 max-w-7xl mx-auto w-full gap-6"
+        className="grid md:hidden grid-cols-1 w-full gap-6"
         style={{ height: "calc(100vh - 220px)" }}
       >
         {/* Mobile: always stack, render all columns in order */}
