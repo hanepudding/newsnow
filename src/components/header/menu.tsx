@@ -5,7 +5,7 @@ import {
   buildExportPayload,
   downloadSettings,
   pickSettingsFile,
-  resetAllSettings,
+  resetAllData,
 } from "~/utils/settings-io"
 
 export function Menu() {
@@ -38,14 +38,14 @@ export function Menu() {
     }
   }, [toaster])
 
-  const handleReset = useCallback(() => {
+  const handleReset = useCallback(async () => {
     show(false)
     // eslint-disable-next-line no-alert
-    const ok = window.confirm("Reset all data to defaults? This clears watchlists, terminal selections, and preferences. Auth state is preserved.")
+    const ok = window.confirm("Reset all data? This clears settings, caches, and service workers for this site. The page will reload to a fresh state.")
     if (!ok) return
-    resetAllSettings()
-    toaster("Reset complete. Reloading...", { type: "info" })
-    setTimeout(() => window.location.reload(), 600)
+    toaster("Clearing all data...", { type: "info" })
+    await resetAllData()
+    window.location.reload()
   }, [toaster])
 
   return (
@@ -117,7 +117,7 @@ export function Menu() {
                 onClick={handleImport}
                 className="cursor-pointer [&_*]:cursor-pointer transition-all"
               >
-                <span className="i-ph:upload-duotone inline-block" />
+                <span className="i-ph:download-duotone inline-block" />
                 <span>Import settings</span>
               </li>
               <li

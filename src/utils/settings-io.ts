@@ -157,26 +157,34 @@ export function applyImportedSettings(raw: unknown): {
 }
 
 /**
- * Reset all user settings to defaults by clearing the keys we own.
- * Auth state is preserved so a logged-in user doesn't get kicked.
- * Also nukes the derived translation cache so reset reliably puts
- * the dashboard in a fresh-install state.
+ * Nuclear reset: wipe ALL browser state for this site.
+ *
+ * Goes beyond just clearing localStorage — also unregisters every
+ * service worker and purges every Cache API entry. This is the
+ * equivalent of the user manually going into DevTools → Application
+ * → "Clear site data". Ensures:
+ *   - Settings return to defaults (localStorage gone)
+ *   - Old JS/CSS bundles are purged (Cache API gone)
+ *   - The PWA service worker re-downloads fresh on next load (SW gone)
+ *   - Any version-update problems are resolved (stale SW was the
+ *     root cause of "need to clear browser data after deploy")
+ *
+ * Call window.location.reload() after this returns.
  */
-export function resetAllSettings(): void {
-  for (const k of SETTINGS_KEYS) {
-    localStorage.removeItem(k)
+export async function resetAllData(): Promise<void> {
+  // 1. localStorage — wipe everything (not just our keys)
+  localStorage.clear()
+
+  // 2. Service workers — unregister all
+  if ("serviceWorker" in navigator) {
+    const registrations = await navigator.serviceWorker.getRegistrations()
+    await Promise.all(registrations.map(r => r.unregister()))
   }
-  localStorage.removeItem(TRANSLATE_CACHE_KEY)
-  // Also clear anything that's not explicitly auth-owned (user may
-  // have leftover keys from old versions). This is defensive: only
-  // touches keys we didn't whitelist as auth.
-  const allKeys = Object.keys(localStorage)
-  for (const k of allKeys) {
-    if (!AUTH_KEYS.has(k) && !isSettingsKey(k) && k !== TRANSLATE_CACHE_KEY) {
-      // Legacy keys like "metadata" (pre-refactor) or "updated"
-      // (flag used by the old usePWA hook) land here.
-      localStorage.removeItem(k)
-    }
+
+  // 3. Cache API — delete every cache store
+  if ("caches" in window) {
+    const keys = await caches.keys()
+    await Promise.all(keys.map(k => caches.delete(k)))
   }
 }
 
