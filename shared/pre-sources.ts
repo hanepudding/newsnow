@@ -5,11 +5,11 @@ import type { OriginSource, Source, SourceID } from "./types"
 
 const Time = {
   Test: 1,
-  Realtime: 2 * 60 * 1000,
-  Fast: 5 * 60 * 1000,
-  Default: Interval, // 10min
-  Common: 30 * 60 * 1000,
-  Slow: 60 * 60 * 1000,
+  Realtime: 1 * 60 * 1000, // 1 min — flash-tier (jin10, forexlive)
+  Fast: 2 * 60 * 1000, // 2 min — major press (wsj, bloomberg, cnbc)
+  Default: 5 * 60 * 1000, // 5 min — fallback for sources without explicit interval
+  Common: 5 * 60 * 1000, // 5 min — reuters, ft, fedpress
+  Slow: 60 * 60 * 1000, // 60 min — daily-ish sources (solidot)
 }
 
 export const originSources = {

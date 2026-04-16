@@ -5,7 +5,7 @@
     "column": "tech",
     "home": "https://v2ex.com/",
     "color": "slate",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最新分享"
   },
@@ -14,7 +14,7 @@
     "column": "tech",
     "home": "https://v2ex.com/",
     "color": "slate",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最新分享"
   },
@@ -24,7 +24,7 @@
     "column": "deprecated",
     "home": "https://www.zhihu.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "weibo": {
@@ -34,7 +34,7 @@
     "column": "deprecated",
     "home": "https://weibo.com",
     "color": "red",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh"
   },
   "zaobao": {
@@ -44,7 +44,7 @@
     "column": "world",
     "home": "https://www.zaobao.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh"
   },
   "coolapk": {
@@ -54,7 +54,7 @@
     "column": "deprecated",
     "home": "https://coolapk.com",
     "color": "green",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "mktnews": {
@@ -63,7 +63,7 @@
     "column": "finance",
     "home": "https://mktnews.net",
     "color": "indigo",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -72,7 +72,7 @@
     "column": "finance",
     "home": "https://mktnews.net",
     "color": "indigo",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -83,7 +83,7 @@
     "column": "finance",
     "home": "https://wallstreetcn.com/",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -93,7 +93,7 @@
     "column": "finance",
     "home": "https://wallstreetcn.com/",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -102,7 +102,7 @@
     "column": "finance",
     "home": "https://wallstreetcn.com/",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最新"
   },
@@ -112,7 +112,7 @@
     "column": "finance",
     "home": "https://wallstreetcn.com/",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最热"
   },
@@ -123,7 +123,7 @@
     "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -133,7 +133,7 @@
     "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -143,7 +143,7 @@
     "column": "deprecated",
     "home": "https://36kr.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "人气榜"
   },
@@ -153,7 +153,7 @@
     "column": "deprecated",
     "home": "https://www.douyin.com",
     "color": "gray",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "hupu": {
@@ -163,7 +163,7 @@
     "column": "deprecated",
     "home": "https://hupu.com",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "tieba": {
@@ -173,7 +173,7 @@
     "column": "deprecated",
     "home": "https://tieba.baidu.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "toutiao": {
@@ -182,7 +182,7 @@
     "column": "china",
     "home": "https://www.toutiao.com",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "ithome": {
@@ -191,7 +191,7 @@
     "column": "tech",
     "home": "https://www.ithome.com",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "thepaper": {
@@ -201,7 +201,7 @@
     "column": "china",
     "home": "https://www.thepaper.cn",
     "color": "gray",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh"
   },
   "sputniknewscn": {
@@ -209,7 +209,7 @@
     "column": "world",
     "home": "https://sputniknews.cn",
     "color": "orange",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "cankaoxiaoxi": {
@@ -217,7 +217,7 @@
     "column": "world",
     "home": "https://china.cankaoxiaoxi.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh"
   },
   "pcbeta": {
@@ -227,7 +227,7 @@
     "column": "tech",
     "home": "https://bbs.pcbeta.com",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "Win11"
   },
@@ -237,7 +237,7 @@
     "column": "tech",
     "home": "https://bbs.pcbeta.com",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "Win11"
   },
@@ -248,7 +248,7 @@
     "column": "finance",
     "home": "https://www.cls.cn",
     "color": "red",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "电报"
   },
@@ -258,7 +258,7 @@
     "column": "finance",
     "home": "https://www.cls.cn",
     "color": "red",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "zh",
     "title": "电报"
   },
@@ -267,7 +267,7 @@
     "column": "finance",
     "home": "https://www.cls.cn",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "深度"
   },
@@ -277,7 +277,7 @@
     "column": "finance",
     "home": "https://www.cls.cn",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热门"
   },
@@ -288,7 +288,7 @@
     "column": "finance",
     "home": "https://xueqiu.com",
     "color": "blue",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "热门股票"
   },
@@ -298,7 +298,7 @@
     "column": "finance",
     "home": "https://xueqiu.com",
     "color": "blue",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "热门股票"
   },
@@ -309,7 +309,7 @@
     "column": "finance",
     "home": "https://www.gelonghui.com",
     "color": "blue",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh"
   },
   "fastbull": {
@@ -319,7 +319,7 @@
     "column": "finance",
     "home": "https://www.fastbull.cn",
     "color": "emerald",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -329,7 +329,7 @@
     "column": "finance",
     "home": "https://www.fastbull.cn",
     "color": "emerald",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "zh",
     "title": "快讯"
   },
@@ -338,7 +338,7 @@
     "column": "finance",
     "home": "https://www.fastbull.cn",
     "color": "emerald",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "头条"
   },
@@ -356,7 +356,7 @@
     "column": "tech",
     "home": "https://news.ycombinator.com/",
     "color": "orange",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "en"
   },
   "producthunt": {
@@ -365,7 +365,7 @@
     "column": "deprecated",
     "home": "https://www.producthunt.com/",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "en"
   },
   "github": {
@@ -375,7 +375,7 @@
     "column": "tech",
     "home": "https://github.com/",
     "color": "gray",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "en",
     "title": "Today"
   },
@@ -385,7 +385,7 @@
     "column": "tech",
     "home": "https://github.com/",
     "color": "gray",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "en",
     "title": "Today"
   },
@@ -396,7 +396,7 @@
     "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热搜"
   },
@@ -406,7 +406,7 @@
     "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热搜"
   },
@@ -417,7 +417,7 @@
     "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热门视频"
   },
@@ -428,7 +428,7 @@
     "column": "deprecated",
     "home": "https://www.bilibili.com",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "排行榜"
   },
@@ -439,7 +439,7 @@
     "column": "deprecated",
     "home": "https://www.kuaishou.com",
     "color": "orange",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "kaopu": {
@@ -448,7 +448,7 @@
     "column": "world",
     "home": "https://kaopu.news/",
     "color": "gray",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh"
   },
   "jin10": {
@@ -457,7 +457,7 @@
     "column": "finance",
     "home": "https://www.jin10.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "baidu": {
@@ -466,7 +466,7 @@
     "column": "china",
     "home": "https://www.baidu.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "nowcoder": {
@@ -475,7 +475,7 @@
     "column": "deprecated",
     "home": "https://www.nowcoder.com",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "sspai": {
@@ -484,7 +484,7 @@
     "column": "tech",
     "home": "https://sspai.com",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "juejin": {
@@ -493,7 +493,7 @@
     "column": "deprecated",
     "home": "https://juejin.cn",
     "color": "blue",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "ifeng": {
@@ -503,7 +503,7 @@
     "column": "china",
     "home": "https://www.ifeng.com",
     "color": "red",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "chongbuluo": {
@@ -512,7 +512,7 @@
     "column": "china",
     "home": "https://www.chongbuluo.com/forum.php?mod=guide&view=newthread",
     "color": "green",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最新"
   },
@@ -521,7 +521,7 @@
     "column": "china",
     "home": "https://www.chongbuluo.com/forum.php?mod=guide&view=newthread",
     "color": "green",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最新"
   },
@@ -531,7 +531,7 @@
     "column": "china",
     "home": "https://www.chongbuluo.com/forum.php?mod=guide&view=hot",
     "color": "green",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "最热"
   },
@@ -542,7 +542,7 @@
     "column": "deprecated",
     "home": "https://www.douban.com",
     "color": "green",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "steam": {
@@ -552,7 +552,7 @@
     "column": "world",
     "home": "https://store.steampowered.com",
     "color": "blue",
-    "interval": 600000
+    "interval": 300000
   },
   "tencent": {
     "redirect": "tencent-hot",
@@ -561,7 +561,7 @@
     "column": "china",
     "home": "https://news.qq.com/tag/aEWqxLtdgmQ=",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "综合早报"
   },
@@ -571,7 +571,7 @@
     "column": "china",
     "home": "https://news.qq.com/tag/aEWqxLtdgmQ=",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "综合早报"
   },
@@ -582,7 +582,7 @@
     "column": "deprecated",
     "home": "https://www.freebuf.com/",
     "color": "green",
-    "interval": 600000,
+    "interval": 300000,
     "lang": "zh"
   },
   "qqvideo": {
@@ -592,7 +592,7 @@
     "column": "deprecated",
     "home": "https://v.qq.com/channel/tv",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热搜榜"
   },
@@ -602,7 +602,7 @@
     "column": "deprecated",
     "home": "https://v.qq.com/channel/tv",
     "color": "blue",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热搜榜"
   },
@@ -613,7 +613,7 @@
     "column": "deprecated",
     "home": "https://www.iqiyi.com",
     "color": "green",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热播榜"
   },
@@ -623,7 +623,7 @@
     "column": "deprecated",
     "home": "https://www.iqiyi.com",
     "color": "green",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "zh",
     "title": "热播榜"
   },
@@ -634,7 +634,7 @@
     "column": "finance",
     "home": "https://www.reuters.com",
     "color": "orange",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "World"
   },
@@ -644,7 +644,7 @@
     "column": "finance",
     "home": "https://www.reuters.com",
     "color": "orange",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "World"
   },
@@ -654,7 +654,7 @@
     "column": "finance",
     "home": "https://www.reuters.com",
     "color": "orange",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Business"
   },
@@ -664,7 +664,7 @@
     "column": "finance",
     "home": "https://www.reuters.com",
     "color": "orange",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Markets"
   },
@@ -675,7 +675,7 @@
     "column": "world",
     "home": "https://apnews.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Top"
   },
@@ -685,7 +685,7 @@
     "column": "world",
     "home": "https://apnews.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Top"
   },
@@ -695,7 +695,7 @@
     "column": "world",
     "home": "https://apnews.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Business"
   },
@@ -705,7 +705,7 @@
     "column": "world",
     "home": "https://apnews.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "World"
   },
@@ -716,7 +716,7 @@
     "column": "finance",
     "home": "https://www.marketwatch.com",
     "color": "green",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Top Stories"
   },
@@ -726,7 +726,7 @@
     "column": "finance",
     "home": "https://www.marketwatch.com",
     "color": "green",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Top Stories"
   },
@@ -736,7 +736,7 @@
     "column": "finance",
     "home": "https://www.marketwatch.com",
     "color": "green",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Market Pulse"
   },
@@ -746,7 +746,7 @@
     "column": "finance",
     "home": "https://www.marketwatch.com",
     "color": "green",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Bulletins"
   },
@@ -757,7 +757,7 @@
     "column": "finance",
     "home": "https://www.cnbc.com",
     "color": "indigo",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Top News"
   },
@@ -767,7 +767,7 @@
     "column": "finance",
     "home": "https://www.cnbc.com",
     "color": "indigo",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Top News"
   },
@@ -777,7 +777,7 @@
     "column": "finance",
     "home": "https://www.cnbc.com",
     "color": "indigo",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Markets"
   },
@@ -787,7 +787,7 @@
     "column": "finance",
     "home": "https://www.cnbc.com",
     "color": "indigo",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "World"
   },
@@ -798,7 +798,7 @@
     "column": "finance",
     "home": "https://www.bloomberg.com",
     "color": "orange",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Markets"
   },
@@ -808,7 +808,7 @@
     "column": "finance",
     "home": "https://www.bloomberg.com",
     "color": "orange",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Markets"
   },
@@ -818,7 +818,7 @@
     "column": "finance",
     "home": "https://www.bloomberg.com",
     "color": "orange",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Politics"
   },
@@ -828,7 +828,7 @@
     "column": "finance",
     "home": "https://www.bloomberg.com",
     "color": "orange",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Technology"
   },
@@ -839,7 +839,7 @@
     "column": "finance",
     "home": "https://seekingalpha.com",
     "color": "amber",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Market Currents"
   },
@@ -849,7 +849,7 @@
     "column": "finance",
     "home": "https://seekingalpha.com",
     "color": "amber",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Market Currents"
   },
@@ -859,7 +859,7 @@
     "column": "finance",
     "home": "https://seekingalpha.com",
     "color": "amber",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Articles"
   },
@@ -870,7 +870,7 @@
     "column": "finance",
     "home": "https://www.ft.com",
     "color": "rose",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "World"
   },
@@ -880,7 +880,7 @@
     "column": "finance",
     "home": "https://www.ft.com",
     "color": "rose",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "World"
   },
@@ -890,7 +890,7 @@
     "column": "finance",
     "home": "https://www.ft.com",
     "color": "rose",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Companies"
   },
@@ -900,7 +900,7 @@
     "column": "finance",
     "home": "https://www.ft.com",
     "color": "rose",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Markets"
   },
@@ -911,7 +911,7 @@
     "column": "finance",
     "home": "https://asia.nikkei.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Top"
   },
@@ -921,7 +921,7 @@
     "column": "finance",
     "home": "https://asia.nikkei.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Top"
   },
@@ -931,7 +931,7 @@
     "column": "finance",
     "home": "https://asia.nikkei.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Business"
   },
@@ -941,7 +941,7 @@
     "column": "finance",
     "home": "https://asia.nikkei.com",
     "color": "red",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en",
     "title": "Economy"
   },
@@ -951,7 +951,7 @@
     "column": "finance",
     "home": "https://finance.yahoo.com",
     "color": "violet",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "forexlive": {
@@ -961,7 +961,7 @@
     "column": "finance",
     "home": "https://www.forexlive.com",
     "color": "orange",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "en",
     "title": "Flash"
   },
@@ -971,7 +971,7 @@
     "column": "finance",
     "home": "https://www.forexlive.com",
     "color": "orange",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "en",
     "title": "Flash"
   },
@@ -981,7 +981,7 @@
     "column": "finance",
     "home": "https://www.forexlive.com",
     "color": "orange",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "en",
     "title": "Central Bank"
   },
@@ -992,7 +992,7 @@
     "column": "finance",
     "home": "https://www.fxstreet.com",
     "color": "rose",
-    "interval": 120000,
+    "interval": 60000,
     "lang": "en"
   },
   "investing": {
@@ -1002,7 +1002,7 @@
     "column": "finance",
     "home": "https://www.investing.com",
     "color": "yellow",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Economic"
   },
@@ -1012,7 +1012,7 @@
     "column": "finance",
     "home": "https://www.investing.com",
     "color": "yellow",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Economic"
   },
@@ -1022,7 +1022,7 @@
     "column": "finance",
     "home": "https://www.investing.com",
     "color": "yellow",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Forex"
   },
@@ -1032,7 +1032,7 @@
     "column": "finance",
     "home": "https://www.investing.com",
     "color": "yellow",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Commodities"
   },
@@ -1043,7 +1043,7 @@
     "column": "finance",
     "home": "https://www.wsj.com",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Markets"
   },
@@ -1053,7 +1053,7 @@
     "column": "finance",
     "home": "https://www.wsj.com",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "Markets"
   },
@@ -1063,7 +1063,7 @@
     "column": "finance",
     "home": "https://www.wsj.com",
     "color": "blue",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en",
     "title": "World"
   },
@@ -1074,7 +1074,7 @@
     "column": "finance",
     "home": "https://www.benzinga.com",
     "color": "lime",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "oilprice": {
@@ -1083,7 +1083,7 @@
     "column": "finance",
     "home": "https://oilprice.com",
     "color": "neutral",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "axios": {
@@ -1092,7 +1092,7 @@
     "column": "world",
     "home": "https://www.axios.com",
     "color": "fuchsia",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en"
   },
   "fedpress": {
@@ -1102,7 +1102,7 @@
     "column": "finance",
     "home": "https://www.federalreserve.gov",
     "color": "emerald",
-    "interval": 1800000,
+    "interval": 300000,
     "lang": "en"
   },
   "coindesk": {
@@ -1111,7 +1111,7 @@
     "column": "finance",
     "home": "https://www.coindesk.com",
     "color": "amber",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "zerohedge": {
@@ -1120,7 +1120,7 @@
     "column": "finance",
     "home": "https://www.zerohedge.com",
     "color": "zinc",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "trumpstruth": {
@@ -1129,7 +1129,7 @@
     "column": "world",
     "home": "https://trumpstruth.org",
     "color": "red",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   },
   "clashreport": {
@@ -1138,7 +1138,7 @@
     "column": "world",
     "home": "https://t.me/s/ClashReport",
     "color": "neutral",
-    "interval": 300000,
+    "interval": 120000,
     "lang": "en"
   }
 }
