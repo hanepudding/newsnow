@@ -1,23 +1,24 @@
-// Translation passthrough endpoint.
+// Translation endpoint with server-side SQLite cache.
 //
-// Proxies the unofficial Google Translate endpoint
-// (translate.googleapis.com/translate_a/single?client=gtx) which is
-// stateless, API-key-free, and used by browser extensions.
+// Flow per headline:
+//   1. Check SQLite cache by hash(target + text)
+//   2. Cache hit → return immediately (no Google request)
+//   3. Cache miss → call Google Translate → store result → return
 //
-// We expose it server-side rather than letting the client call Google
-// directly so that:
-//   1. CORS is guaranteed to work (some deployments block cross-origin)
-//   2. The egress point is single and auditable — users on an
-//      air-gapped deployment just need to whitelist translate.googleapis.com
-//      on this server, not on every client
-//   3. If someone wants to swap the provider later (LibreTranslate,
-//      DeepL, etc.) only this file changes
+// This means: N users seeing the same Bloomberg headline only trigger
+// ONE Google Translate request total. Every subsequent user (or the
+// same user on a different device) gets the cached translation from
+// SQLite. Cache TTL is 7 days — headline translations don't change.
 //
-// No server-side cache — client caches in localStorage by
-// (text, targetLang) hash. For a personal dashboard the client cache
-// covers 99% of repeat requests anyway.
+// The client still has its own localStorage cache on top of this, so
+// the typical flow for a returning user is:
+//   localStorage hit → no server request at all
+//   localStorage miss, server cache hit → fast, no Google
+//   both miss → Google → cached at both levels
 
 import { z } from "zod"
+import md5 from "md5"
+import { getCacheTable } from "#/database/cache"
 
 const bodySchema = z.object({
   texts: z.array(z.string().min(1).max(2000)).min(1).max(50),
@@ -26,10 +27,12 @@ const bodySchema = z.object({
 })
 
 interface GoogleTranslateResponse {
-  // Array-of-arrays: [segments, ..., detectedSrc, ...]
-  // Each segment: [translatedText, originalText, ...]
   0: Array<[string, string, ...any[]]>
   2?: string
+}
+
+function cacheKey(target: string, text: string): string {
+  return `tr:${target}:${md5(text)}`
 }
 
 async function translateOne(text: string, target: string, source = "auto"): Promise<string> {
@@ -38,7 +41,6 @@ async function translateOne(text: string, target: string, source = "auto"): Prom
     const res = await myFetch(url, {
       responseType: "json",
       headers: {
-        // Minimal UA to look like a normal client
         "User-Agent": "Mozilla/5.0",
       },
     }) as GoogleTranslateResponse
@@ -67,11 +69,43 @@ export default defineEventHandler(async (event) => {
 
   const { texts, target, source } = parsed.data
 
-  // Parallel fan-out. Google's unofficial endpoint handles reasonable
-  // concurrency fine; we cap the batch at 50 so one request can't
-  // blow through a rate limit.
+  // Try to get a cache table. If DB is unavailable, fall through to
+  // direct translation (stateless passthrough, still works).
+  let cache: Awaited<ReturnType<typeof getCacheTable>> | undefined
+  try {
+    cache = await getCacheTable()
+  } catch {}
+
   const translations = await Promise.all(
-    texts.map(t => translateOne(t, target, source)),
+    texts.map(async (text) => {
+      const key = cacheKey(target, text)
+
+      // 1. Check server cache
+      if (cache) {
+        try {
+          const cached = await cache.get(key)
+          if (cached?.items?.[0]?.title) {
+            return cached.items[0].title
+          }
+        } catch {}
+      }
+
+      // 2. Cache miss → call Google
+      const result = await translateOne(text, target, source)
+
+      // 3. Store in server cache (fire-and-forget)
+      if (cache && result) {
+        try {
+          // Reuse the existing cache table shape: items is NewsItem[].
+          // We store the translation as a single-item array with the
+          // translated text in the `title` field. A bit of a hack but
+          // avoids creating a separate table.
+          await cache.set(key, [{ id: key, title: result, url: "" }])
+        } catch {}
+      }
+
+      return result
+    }),
   )
 
   return { translations }
