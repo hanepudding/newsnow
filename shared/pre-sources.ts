@@ -5,11 +5,11 @@ import type { OriginSource, Source, SourceID } from "./types"
 
 const Time = {
   Test: 1,
-  Realtime: 1 * 60 * 1000, // 1 min — flash-tier (jin10, forexlive)
-  Fast: 2 * 60 * 1000, // 2 min — major press (wsj, bloomberg, cnbc)
-  Default: 5 * 60 * 1000, // 5 min — fallback for sources without explicit interval
-  Common: 5 * 60 * 1000, // 5 min — reuters, ft, fedpress
-  Slow: 60 * 60 * 1000, // 60 min — daily-ish sources (solidot)
+  Realtime: 1 * 60 * 1000, // 1 min — currently all sources use this
+  Fast: 1 * 60 * 1000, // 1 min (reserved tier, same as Realtime for now)
+  Default: 1 * 60 * 1000, // 1 min (reserved tier, same as Realtime for now)
+  Common: 1 * 60 * 1000, // 1 min (reserved tier, same as Realtime for now)
+  Slow: 1 * 60 * 1000, // 1 min (reserved tier, same as Realtime for now)
 }
 
 export const originSources = {
