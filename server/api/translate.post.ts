@@ -36,7 +36,13 @@ function cacheKey(target: string, text: string): string {
   return `tr:${target}:${md5(text)}`
 }
 
+// Failed translations are not cached, so every poll re-sends them; without
+// a pause after 429 the retries keep Google's rate limit from lifting.
+const RATE_LIMIT_PAUSE_MS = 10 * 60 * 1000
+let pausedUntil = 0
+
 async function translateOne(text: string, target: string, source = "auto"): Promise<string> {
+  if (Date.now() < pausedUntil) return ""
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(source)}&tl=${encodeURIComponent(target)}&dt=t&q=${encodeURIComponent(text)}`
   try {
     const res = await myFetch(url, {
@@ -53,6 +59,11 @@ async function translateOne(text: string, target: string, source = "auto"): Prom
     }
     return parts.join("")
   } catch (e: any) {
+    if (e.statusCode === 429) {
+      if (Date.now() >= pausedUntil) logger.warn(`translate got 429, pausing for ${RATE_LIMIT_PAUSE_MS / 60000} min`)
+      pausedUntil = Date.now() + RATE_LIMIT_PAUSE_MS
+      return ""
+    }
     logger.warn(`translate failed for "${text.slice(0, 40)}...": ${e.message}`)
     return ""
   }
