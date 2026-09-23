@@ -8,7 +8,7 @@
 // This means: N users seeing the same Bloomberg headline only trigger
 // ONE Google Translate request total. Every subsequent user (or the
 // same user on a different device) gets the cached translation from
-// SQLite. Cache TTL is 7 days — headline translations don't change.
+// SQLite. Entries never expire — headline translations don't change.
 //
 // The client still has its own localStorage cache on top of this, so
 // the typical flow for a returning user is:
@@ -16,9 +16,10 @@
 //   localStorage miss, server cache hit → fast, no Google
 //   both miss → Google → cached at both levels
 
+import process from "node:process"
 import { z } from "zod"
 import md5 from "md5"
-import { getCacheTable } from "#/database/cache"
+import { Cache } from "#/database/cache"
 
 const bodySchema = z.object({
   texts: z.array(z.string().min(1).max(2000)).min(1).max(50),
@@ -71,10 +72,16 @@ export default defineEventHandler(async (event) => {
 
   // Try to get a cache table. If DB is unavailable, fall through to
   // direct translation (stateless passthrough, still works).
-  let cache: Awaited<ReturnType<typeof getCacheTable>> | undefined
+  // Not getCacheTable(): it honours ENABLE_CACHE, which must stay false so
+  // news sources skip their 30-min TTL branch, yet this cache must stay on
+  // or every headline hits Google on every poll.
+  let cache: Cache | undefined
   try {
-    cache = await getCacheTable()
-  } catch {}
+    cache = new Cache(useDatabase())
+    if (process.env.INIT_TABLE !== "false") await cache.init()
+  } catch {
+    cache = undefined
+  }
 
   const translations = await Promise.all(
     texts.map(async (text) => {
